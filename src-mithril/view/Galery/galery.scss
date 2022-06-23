@@ -1,0 +1,25 @@
+@import '../../index.scss';
+
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: large;
+    font-weight: 700;
+}
+
+.filter{
+    display: flex;
+    align-items:flex-end;
+}
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+    .row{
+        flex: 0 0 auto;
+        width: 25%;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 2rem;
+    }
+}

@@ -1,0 +1,38 @@
+@import '../../index.scss';
+
+
+.thumbnail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 0.25rem;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .description {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.description {
+    .name {
+        font-weight: bold;
+        color: black;
+    }
+
+    .size {
+        padding: 0.25rem;
+        background: $primary-shade-1;
+        border-radius: 100%;
+        color: $secondary-text;
+    }
+}

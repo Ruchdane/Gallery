@@ -1,0 +1,26 @@
+$primary:#931248;
+$primary-text:#ffff;
+$primary-light:#dc2b78;
+$primary-dark:#7b1842;
+ 
+$secondary:#f7bacf;
+$secondary-text:#000000;
+$secondary-light:#ffeeff;
+$secondary-dark:#c48b9f;
+
+$primary-shade-1 :#dc2b78;
+$primary-shade-2 :#C2276A;
+$primary-shade-3 :#931248;
+$primary-shade-4 :#770c39;
+$primary-shade-5 :#661537;
+
+
+$sidebar-icon-size: 2rem;
+$sidebar-padding: 10px;
+$sidebar-collapsed-width: 51px;
+$sidebar-opened-width: 121px;
+.app{
+    margin: 0px;
+    background: $primary-shade-3;
+    color: $secondary-light;
+}
