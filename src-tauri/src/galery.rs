@@ -1,4 +1,5 @@
 use crate::setting::get_user_settings;
+use crate::error::unwrap_or_return_to_string;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::io;
@@ -48,7 +49,6 @@ impl Galery {
         })
     }
 }
-
 pub struct Media {}
 #[tauri::command]
 pub fn get_galeries() -> Result<Vec<Galery>, String> {
@@ -61,15 +61,9 @@ pub fn get_galeries() -> Result<Vec<Galery>, String> {
     };
     let mut galerys = vec![];
     for entry in entries {
-        let entry = match entry {
-            Ok(value) => value,
-            Err(error) => return Err(error.to_string()),
-        };
+        let entry = unwrap_or_return_to_string!(entry);
         if entry.is_dir() {
-            galerys.push(match Galery::new(&entry.as_path()) {
-                Ok(value) => value,
-                Err(error) => return Err(error.to_string()),
-            })
+            galerys.push(unwrap_or_return_to_string!(Galery::new(&entry.as_path())))
         }
     }
     Ok(galerys)

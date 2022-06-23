@@ -7,9 +7,9 @@ use mime_guess;
 use std::fs::{canonicalize, read};
 use tauri::http::ResponseBuilder;
 use tauri::Manager;
+mod error;
 mod galery;
 mod setting;
-mod error;
 fn main() {
     galery::get_galeries().unwrap();
     tauri::Builder::default()

@@ -7,3 +7,12 @@ macro_rules! unwrap_or_return {
         }
     };
 }
+macro_rules! unwrap_or_return_to_string {
+    ( $e:expr ) => {
+        match $e {
+            Ok(x) => x,
+            Err(err) => return Err(err.to_string()),
+        }
+    }
+}
+pub(crate) use unwrap_or_return_to_string;
