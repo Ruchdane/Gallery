@@ -6,7 +6,8 @@ import { get_galeries } from '../../controller/galery'
 
 import './galery.scss'
 
-var galeries = [{
+var galeries = [
+    /*{
     path: '/home/ruchdane/Pictures/walpaper/a',
     size: 16,
     thumbnail: '/home/ruchdane/Pictures/walpaper/a/736461.png'
@@ -14,7 +15,7 @@ var galeries = [{
     path: '/home/ruchdane/Pictures/walpaper/b',
     size: 16,
     thumbnail: '/home/ruchdane/Pictures/walpaper/b/wallpaperflare.com_wallpaper.jpg'
-}]
+}*/]
 const Galeries = {
     oninit(vnode) {
         routes.settile()
