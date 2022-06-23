@@ -27,7 +27,9 @@ const Galeries = {
     view() {
         return <Layout>
             <div class="title"> Galery </div>
-            <div class='from'> FIlter </div>
+            <div class='filter'> 
+                <input type="search" placeholder="Filter"/> 
+            </div>
             <div class='grid'> {
                 galeries.map(galery => m(Thumbnail, { class:"row",galery: galery }))
             }
