@@ -5,7 +5,7 @@ var layout_collapsed = false
 
 const Layout = {
 	view(vnode) {
-		return m(Navbar),m('main',vnode.children)
+		return [m(Navbar),m('main',vnode.children)]
 	}
 };
 

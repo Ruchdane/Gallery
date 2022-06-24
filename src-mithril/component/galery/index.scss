@@ -1,0 +1,32 @@
+@import '../../index.scss';
+.viewport{
+	padding-left:10px;
+	padding-right:10px;
+	margin-bottom: 10px;
+}
+.img-container{
+	display:flex;
+	min-height:50vh;
+	img{
+		padding-top: 10px;
+		padding-bottom: 10px;
+		justify-self: center;
+		max-width: 100%;
+		margin:auto;
+	}
+	img.fit{	
+		max-height:80vh;
+	}
+	img.fill {
+		height:auto;
+	}
+}
+.imgs-container{
+	display:flex;
+	flex-direction: column;
+	min-height:50vh;
+	align-items: center;
+	//img{
+	//	justify-self:center;
+	//}
+}

@@ -1,9 +1,13 @@
 @import '../../index.scss';
 
 button {
-    background-color: #ffff;
+//    background-color: #ffff;
+    background-color: transparent;
     font-size: 1rem;
     padding: 0.375rem 0.75rem;
+    .black{
+	    border-color:white;
+    }
     border: 1px solid black;
     margin-left: 1.5px;
     margin-right: 1.5px;

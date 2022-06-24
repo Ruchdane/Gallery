@@ -1,6 +1,6 @@
 import m from 'mithril'
 import Galeries from '../view/Galery'
-import Galery from '../view/Galery/galery'
+import Galery from '../view/Galery/galery.jsx'
 
 function View(title, url, view) {
     return {
@@ -11,8 +11,8 @@ function View(title, url, view) {
 }
 export const routes = {
     views: [
-        View('Galeries', '/galery', Galeries),
-        View('Galeries', '/galery/:id', Galery)
+        View('Galeries', '/galeries', Galeries),
+        View('Galeries', '/galery', Galery)
     ],
     setup() {
         var routes = {}
@@ -21,7 +21,16 @@ export const routes = {
         });
         m.route(document.body, this.views[0].url, routes)
     },
+    open_galery(galery){
+	m.route.set('/galery',{
+		galery:galery
+	});
+    },
     settile(title) {
+	    if(title != undefined){
+		 document.title = title;
+		    return
+	    }
         var url = m.route.get()
         for (const view of this.views) {
             if (view.url == url) {
