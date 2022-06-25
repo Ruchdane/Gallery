@@ -1,5 +1,5 @@
-use crate::setting::get_user_settings;
 use crate::error::unwrap_or_return_to_string;
+use crate::setting::get_user_settings;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::io;
@@ -38,10 +38,23 @@ impl Galery {
         let error = format!("Aucun fichier retrouver dans le dossier {}", path.display());
         Err(Error::new(ErrorKind::Other, error))
     }
+    fn get_galery_medias(path: String) -> io::Result<Vec<Media>> {
+        let mut medias = vec![];
+        for entry in fs::read_dir(path)? {
+            let entry = entry?;
+            let path = entry.path();
+            if !path.is_dir() {
+                let media = Media::new(&path)?;
+                medias.push(media)
+            }
+        }
+        Ok(medias)
+    }
     fn new(galery_path: &Path) -> io::Result<Galery> {
         let path = galery_path.to_string_lossy().to_string();
         let size = Self::get_galery_size(galery_path)?;
         let thumbnail = Self::get_galery_thumbnail(galery_path)?;
+        let thumbnail = Media::convert_url(&thumbnail);
         Ok(Self {
             path,
             size,
@@ -49,7 +62,26 @@ impl Galery {
         })
     }
 }
-pub struct Media {}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Media {
+    src: String,
+    r#type: String,
+}
+
+impl Media {
+    pub fn new(path: &Path) -> io::Result<Self> {
+        
+        let src = path.to_string_lossy().to_string();
+        let src = Self::convert_url(&src);
+        let r#type = "image".to_string();
+        Ok(Self { src, r#type })
+    }
+    pub fn convert_url(url: &String) -> String{
+        format!("outside://{}",url)
+    }
+}
+
 #[tauri::command]
 pub fn get_galeries() -> Result<Vec<Galery>, String> {
     let path = get_user_settings().unwrap().path;
@@ -66,5 +98,13 @@ pub fn get_galeries() -> Result<Vec<Galery>, String> {
             galerys.push(unwrap_or_return_to_string!(Galery::new(&entry.as_path())))
         }
     }
+
     Ok(galerys)
 }
+
+#[tauri::command]
+pub fn get_galery_media(path:String) -> Result<Vec<Media>,String> {
+    let galery = unwrap_or_return_to_string!(Galery::get_galery_medias(path));
+    Ok(galery)
+}
+
