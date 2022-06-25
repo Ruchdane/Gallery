@@ -14,11 +14,12 @@ $primary-shade-3 :#931248;
 $primary-shade-4 :#770c39;
 $primary-shade-5 :#661537;
 
-
 $sidebar-icon-size: 2rem;
 $sidebar-padding: 10px;
 $sidebar-collapsed-width: 51px;
 $sidebar-opened-width: 121px;
+
+$header-z-index: 10;
 
 body {
     margin: 0px;

@@ -5,6 +5,7 @@ header{
     position: fixed;
     bottom:0;
     width:100%;
+	z-index: $header-z-index;
 //    padding: 0.25rem;
     display: flex;
     flex-wrap: nowrap;
