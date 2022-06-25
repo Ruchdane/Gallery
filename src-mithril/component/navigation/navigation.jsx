@@ -4,17 +4,17 @@ import {random,rounded} from '../../utility.js'
 import './navigation.scss'
 
 function Navigation(initialVnode){
-	function update(value){
-		initialVnode.attrs.onchange(rounded(value,initialVnode.attrs.limit))
+	function update(attrs,value){
+		attrs.onchange(rounded(value,attrs.limit))
 	}
 	var edit = false
 	return {
 		view(vnode){
 			return <div class="navigation">
 					<div>
-						<Button class="outlined primary" onclick={ _=> update(0) } > {"<<"} </Button>
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs.index-1) }> {"<"} </Button>	
-						<Button class="outlined primary" onclick={ _=> update(random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,0) } > {"<<"} </Button>
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,vnode.attrs.index-1) }> {"<"} </Button>	
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
 					</div>
@@ -27,16 +27,16 @@ function Navigation(initialVnode){
 							min:1,
 							max:vnode.attrs.limit,
 							onchange:(e)=> {
-								update(e.target.value -1 )
+								update(vnode.attrs,e.target.value -1 )
 								edit=!edit}
 						},vnode.attrs.index+1)
 					}
 					<div>
-						<Button class="outlined primary" onclick={ _=> update(random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs.index + 1) }> {">"}  </Button>	
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs.limit - 1) }> {">>"} </Button>
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,vnode.attrs.limit - 1) }> {">>"} </Button>
 					</div>
 				
 				</div>
