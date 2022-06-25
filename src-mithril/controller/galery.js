@@ -1,6 +1,7 @@
 import m from 'mithril'
 import { invoke } from '@tauri-apps/api/tauri'
 import { log } from '../config/error'
+import { open } from '@tauri-apps/api/dialog';
 
 /**
  * @typedef {Object} Galery 
@@ -49,4 +50,22 @@ export function get_galery_media(galery, callback) {
     invoke("get_galery_media",{path:galery.path})
     .then(value=>   callback(value))
     .catch(error=>log(error))
+}
+
+export function change_root(callback){
+	var new_root = open({
+		directory: true,
+		multiple: false,
+		title:"Change root folder"
+	})
+	.then(new_root => {
+			if(new_root != null) 
+					invoke("change_root",{newRoot:new_root})
+							.then(
+									callback
+							)
+							.catch(error=>log(error))
+	})
+    .catch(error=>log(error))
+	
 }
