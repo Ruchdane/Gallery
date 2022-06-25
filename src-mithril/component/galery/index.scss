@@ -17,16 +17,14 @@
 	img.fit{	
 		max-height:75vh;
 	}
-	img.fill {
-		height:auto;
-	}
 }
 .imgs-container{
 	display:flex;
 	flex-direction: column;
 	min-height:50vh;
 	align-items: center;
-	//img{
-	//	justify-self:center;
-	//}
+	img{
+		max-width: 100%;
+		justify-self:center;
+	}
 }
