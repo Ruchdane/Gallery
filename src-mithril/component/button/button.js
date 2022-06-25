@@ -5,7 +5,7 @@ const Button = {
     view(vnode){
         return m('button',{
 		onclick:vnode.attrs.onclick,
-		class: is_undefined(vnode.attrs.class)
+		class: `${is_undefined(vnode.attrs.class)}`
         },vnode.children)
     }
 }

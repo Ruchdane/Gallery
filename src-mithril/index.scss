@@ -1,10 +1,10 @@
 $primary: #931248;
-$primary-text: #ffff;
+$primary-text: #F2D0D0;
 $primary-light: #dc2b78;
 $primary-dark: #7b1842;
 
 $secondary: #f7bacf;
-$secondary-text: #000000;
+$secondary-text: #5C273D;
 $secondary-light: #ffeeff;
 $secondary-dark: #c48b9f;
 
@@ -24,7 +24,7 @@ body {
     margin: 0px;
     user-select: none;
     background: $primary-shade-3;
-    color: $secondary-light;
+    color: $primary-text;
 }
 
 $xl: 87.5em; // 4k and hi-res desktop

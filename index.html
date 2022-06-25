@@ -10,16 +10,3 @@
     <script type="module" src="/src-mithril/index.js"></script>
   </body>
 </html>
-m(Layout, null, /* @__PURE__ */
-m("div", {
-    class: "title"
-}, " Galery "), /* @__PURE__ */
-m("div", {
-    class: "from"
-}, " FIlter "), /* @__PURE__ */
-m("div", {
-    class: "grid"
-}, " ", galeries.map((galery)=>m(Thumbnail, {
-    class: "row",
-    galery
-}))));

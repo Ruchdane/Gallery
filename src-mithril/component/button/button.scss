@@ -5,21 +5,38 @@ button {
     background-color: transparent;
     font-size: 1rem;
     padding: 0.375rem 0.75rem;
-    .black{
-	    border-color:white;
-    }
-    border: 1px solid black;
     margin-left: 1.5px;
     margin-right: 1.5px;
     user-select: none;
+    border:none;
     border-radius: 5px;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     cursor: pointer;
-    &:hover {
-        color: #fff;
-        background-color: #000;
-    }
     &:active{
-        border: 1px solid gray;
+        border: 1px solid $primary-light;
     }
+    &.outlined{
+	    border: 1px solid $primary-shade-1;
+		&:hover{
+	    	border: 1px solid transparent;
+			color: $primary-text;
+		}
+	}
+	
+	&.primary {
+		color: $primary-shade-1;
+	    background-color: $primary-shade-3;
+	    &:hover {
+			background-color: $primary-shade-1;
+			color: $primary-text;
+	    }
+	}
+	&.secondary {
+	    color: $primary-text;
+	    &:hover {
+			background-color: $primary-shade-3;
+			color: $primary-text;
+	    }
+	}
+	
 }
