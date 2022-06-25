@@ -1,3 +1,4 @@
+import m from 'mithril'
 import { invoke } from '@tauri-apps/api/tauri'
 import { log } from '../config/error'
 
@@ -46,9 +47,6 @@ export function get_galery_media(galery, callback) {
     )
     */
     invoke("get_galery_media",{path:galery.path})
-    .then(value=>{
-	    callback(value)
-    }
-    )
+    .then(value=>   callback(value))
     .catch(error=>log(error))
 }

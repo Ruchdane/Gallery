@@ -7,14 +7,10 @@ import { get_galeries } from '../../controller/galery'
 import './galery.scss'
 
 var galeries = []
-const Galeries = {
+const Galeries =  {
     oninit(vnode) {
         routes.settile()
-        get_galeries(value => {
-           galeries = value
-            m.redraw()
-        })
-
+       get_galeries(value =>  galeries = value)
     },
     view() {
         return <Layout>
