@@ -18,6 +18,7 @@ fn main() {
             galery::get_galery_media
         ])
         .register_uri_scheme_protocol("outside", move |_app, request| {
+            // FIXME file with multipl dot have a problem like 1.2.jpg
             let not_found = ResponseBuilder::new().status(404).body(Vec::new());
 //            let internal_error = ResponseBuilder::new().status(500).body(Vec::new());
             let path = request.uri().replace("outside://", "");

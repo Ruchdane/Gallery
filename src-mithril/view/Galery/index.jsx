@@ -28,8 +28,10 @@ const Galeries =  {
         return <Layout actions={actions}>
             <div class="title"> Galery </div>
             <div class='filter'> 
+				{/*TODO implement filter*/}
                 <input type="search" placeholder="Filter"/> 
             </div>
+				{/*TODO Add Pagination maximum 4 row so limit = 4*4*/}
             <div class='grid'> {
                 galeries.map(galery => m('.row',{onclick: _ => routes.open_galery(galery)},
 			m(Thumbnail, { galery:galery}))

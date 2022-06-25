@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use crate::error::unwrap_or_return_to_string;
+use tauri::api::path::picture_dir;
 
 #[derive(Serialize, Deserialize)]
 pub struct Setting {
@@ -10,9 +11,14 @@ pub struct Setting {
 /// `Setting` implements `Default`
 impl ::std::default::Default for Setting {
     fn default() -> Self {
+        let image_dir = match  picture_dir(){
+            Some(value)=> value.to_string_lossy().to_string(),
+            None => "~/Pictures".to_string()
+        };
+
         Self {
             version: 0,
-            path: "/home/ruchdane/Pictures/walpaper".into(),
+            path:image_dir
         }
     }
 }

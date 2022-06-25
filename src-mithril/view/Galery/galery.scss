@@ -24,31 +24,34 @@
 
 .grid {
     display: flex;
+	flex-wrap: wrap;
     gap: 10px;
     margin: 10px;
+	padding: 10px;
+	justify-content: center;
     .row {
         max-width: 200px;
         height: 250px;
-
+		margin-bottom:2rem;
         @include responsive($xl) {
-            flex-grow: 1;
+            flex: 1 1 auto;
         }
 
         @include responsive($lg) {
-            flex-grow: 1;
+            flex: 1 1 auto;
         }
 
         @include responsive($md) {
-            flex-grow: 1;
+            flex: 1 1 auto;
 
         }
 
         @include responsive($sm) {
-            flex-grow: 1;
+            flex: 1 1 auto;
         }
 
         @include responsive($xs) {
-            flex-grow: 1;
+            flex: 1 1 auto;
         }
 
     }

@@ -59,7 +59,7 @@ function Galery(initialVnode){
 		},
 		view(vnode) {
 			return <Layout actions={actions} >
-						<h1 class="title"> {name} </h1>
+						<h1 class="title"> {model.name} </h1>
 						{ model.elements.length > 0
 								?model.show_all 
 									?m(All ,{elements: model.elements})
