@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::error::unwrap_or_return_to_string;
 
 #[derive(Serialize, Deserialize)]
 pub struct Setting {
@@ -18,8 +19,13 @@ impl ::std::default::Default for Setting {
 
 #[tauri::command]
 pub fn get_user_settings() -> Result<Setting, String> {
-    match confy::load("galery") {
-        Ok(cfg) => Ok(cfg),
-        Err(error) => Err(error.to_string()),
-    }
+    Ok(unwrap_or_return_to_string!(confy::load("galery")))    
+}
+//FIXME coonfiguration save sometime corrupt the file 
+//change configuration system or ...
+#[tauri::command]
+pub fn change_root(new_root:String)-> Result<(),String> {
+    let mut cfg : Setting = unwrap_or_return_to_string!(confy::load("galery"));
+    cfg.path = new_root;
+    Ok(unwrap_or_return_to_string!(confy::store("galery",cfg)))
 }

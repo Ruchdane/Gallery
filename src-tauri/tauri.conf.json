@@ -14,7 +14,8 @@
   "tauri": {
     "allowlist": {
       "dialog": {
-        "message": true
+        "message": true,
+	"open":true
       }
     },
     "bundle": {

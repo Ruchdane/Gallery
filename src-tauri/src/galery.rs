@@ -3,7 +3,6 @@ use crate::setting::get_user_settings;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::io;
-use std::io::{Error, ErrorKind};
 use std::path::Path;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -25,18 +24,18 @@ impl Galery {
         }
         Ok(size)
     }
-    // TODO Si un dossier  ne contient aucun fichier on revoie une erreur
-    // Ajouter un parametre pour ajouter le dossier vide
     fn get_galery_thumbnail(path: &Path) -> io::Result<String> {
         for entry in fs::read_dir(path)? {
             let entry = entry?;
             let path = entry.path();
+            //TODO check file type if it's a video make a thumbnail 
             if !path.is_dir() {
                 return Ok(path.to_string_lossy().to_string());
             }
         }
-        let error = format!("Aucun fichier retrouver dans le dossier {}", path.display());
-        Err(Error::new(ErrorKind::Other, error))
+        // HOTFIXES
+        // Using default thumbnail none for now
+        return Ok("unknown/thumbnail".to_string())
     }
     fn get_galery_medias(path: String) -> io::Result<Vec<Media>> {
         let mut medias = vec![];
