@@ -53,7 +53,6 @@ impl Galery {
         let path = galery_path.to_string_lossy().to_string();
         let size = Self::get_galery_size(galery_path)?;
         let thumbnail = Self::get_galery_thumbnail(galery_path)?;
-        let thumbnail = Media::convert_url(&thumbnail);
         Ok(Self {
             path,
             size,
@@ -72,12 +71,8 @@ impl Media {
     pub fn new(path: &Path) -> io::Result<Self> {
         
         let src = path.to_string_lossy().to_string();
-        let src = Self::convert_url(&src);
         let r#type = "image".to_string();
         Ok(Self { src, r#type })
-    }
-    pub fn convert_url(url: &String) -> String{
-        format!("outside://{}",url)
     }
 }
 
