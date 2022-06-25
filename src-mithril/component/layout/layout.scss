@@ -1,13 +1,5 @@
 @import '../../index.scss';
-%main{
+main{
     overflow-y: auto;
-}
-.main-full{
-    overflow-y: auto;
-    padding-left: $sidebar-opened-width;
-}
-    
-.main-collapsed{
-    overflow-y: auto;
-    padding-left: $sidebar-collapsed-width;
+    padding-bottom:40px;
 }
