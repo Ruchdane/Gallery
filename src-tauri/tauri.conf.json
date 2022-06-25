@@ -7,14 +7,14 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "gGlery",
+    "productName": "galery",
     "version": "0.1.0"
   },
   
   "tauri": {
     "allowlist": {
-      "os": {
-        "all": false
+      "dialog": {
+        "message": true
       }
     },
     "bundle": {

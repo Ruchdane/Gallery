@@ -1,3 +1,4 @@
+import m from 'mithril'
 import { invoke } from '@tauri-apps/api/tauri'
 import { log } from '../config/error'
 
@@ -10,6 +11,8 @@ import { log } from '../config/error'
 
 
 export function get_galeries(callback) {
+	/*
+	 * Decommennt to use in frontend without rust
 	callback([
 	{
 	    path: '/wallpaper/a',
@@ -20,12 +23,19 @@ export function get_galeries(callback) {
 	    size: 16,
 	    thumbnail: '/wallpaper/b/wallpaperflare.com_wallpaper.jpg'
 	}])
-//    invoke("get_galeries")
-//    .then(value=>callback(value))
-//    .catch(error=>log(error))
+	*/
+	/*
+	 * Decoment to call backend funnction
+	 */
+    invoke("get_galeries")
+    .then(value=>callback(value))
+    .catch(error=>log(error))
 }
 
-export function get_galery_element(galery, callback) {
+export function get_galery_media(galery, callback) {
+	/*
+	 * Decommennt to use in frontend without rust
+	callback([
     callback(Array.from(
 	    ['wallpaperflare.com_wallpaper.jpg'
 ,'112131.jpg', '215588.jpg', '415519.jpg', '640956.jpg', 
@@ -35,4 +45,8 @@ export function get_galery_element(galery, callback) {
 	    ,photos => ({src:new URL(`${galery}/${photos}`,import.meta.url).href})
     )
     )
+    */
+    invoke("get_galery_media",{path:galery.path})
+    .then(value=>   callback(value))
+    .catch(error=>log(error))
 }

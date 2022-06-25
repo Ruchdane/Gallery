@@ -13,6 +13,6 @@ macro_rules! unwrap_or_return_to_string {
             Ok(x) => x,
             Err(err) => return Err(err.to_string()),
         }
-    }
+    };
 }
 pub(crate) use unwrap_or_return_to_string;

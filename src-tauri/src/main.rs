@@ -6,7 +6,6 @@
 use mime_guess;
 use std::fs::{canonicalize, read};
 use tauri::http::ResponseBuilder;
-use tauri::Manager;
 mod error;
 mod galery;
 mod setting;
@@ -15,11 +14,12 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             setting::get_user_settings,
-            galery::get_galeries
+            galery::get_galeries,
+            galery::get_galery_media
         ])
-        .register_uri_scheme_protocol("outside", move |app, request| {
+        .register_uri_scheme_protocol("outside", move |_app, request| {
             let not_found = ResponseBuilder::new().status(404).body(Vec::new());
-            let internal_error = ResponseBuilder::new().status(500).body(Vec::new());
+//            let internal_error = ResponseBuilder::new().status(500).body(Vec::new());
             let path = request.uri().replace("outside://", "");
             let content = unwrap_or_return!(
                 read(unwrap_or_return!(canonicalize(&path), not_found)),

@@ -3,9 +3,9 @@ import Navigation from '../navigation/navigation.jsx'
 import {rounded} from '../../utility.js'
 import './index.scss'
 
+var elements = []
 function  Single(initialVnode) {
 	var index = 0
-	var elements = initialVnode.attrs.elements
 	function keyHandler(e){
 	  if (e.key === "ArrowRight"){
 		index = rounded(index + 1, elements.length)
@@ -22,14 +22,15 @@ function  Single(initialVnode) {
 		index = rounded(index + step, elements.length)
 	}
 	return {
-		oninit() {
+		oninit(vnode) {
+			elements = vnode.attrs.elements
 			document.addEventListener("keydown", keyHandler);
 		},
 	        onremove() {
         	        document.removeEventListener("keydown", keyHandler)
 	        },
-
 		view(vnode) {
+			elements = vnode.attrs.elements
 			return <div class="viewport">
 				<Navigation index={index} limit={elements.length} onchange={(value) => index = value}/>
 				<div class="img-container" onclick={clickHandler}>
