@@ -12,9 +12,9 @@ function Navigation(initialVnode){
 		view(vnode){
 			return <div class="navigation">
 					<div>
-						<Button onclick={ _=> update(0) } > {"<<"} </Button>
-						<Button onclick={ _=> update(vnode.attrs.index-1) }> {"<"} </Button>	
-						<Button onclick={ _=> update(random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
+						<Button class="outlined primary" onclick={ _=> update(0) } > {"<<"} </Button>
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs.index-1) }> {"<"} </Button>	
+						<Button class="outlined primary" onclick={ _=> update(random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
 					</div>
@@ -32,11 +32,11 @@ function Navigation(initialVnode){
 						},vnode.attrs.index+1)
 					}
 					<div>
-						<Button onclick={ _=> update(random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
+						<Button class="outlined primary" onclick={ _=> update(random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
-						<Button onclick={ _=> update(vnode.attrs.index + 1) }> {">"}  </Button>	
-						<Button onclick={ _=> update(vnode.attrs.limit - 1) }> {">>"} </Button>
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs.index + 1) }> {">"}  </Button>	
+						<Button class="outlined primary" onclick={ _=> update(vnode.attrs.limit - 1) }> {">>"} </Button>
 					</div>
 				
 				</div>

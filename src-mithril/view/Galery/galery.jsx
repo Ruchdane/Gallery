@@ -12,17 +12,26 @@ function Galery(initialVnode){
 	var galery_elements = []
 	var name = file_from_path(galery.path)
 	var show_all = true
+	var actions = [
+			{
+					perform: _ => routes.goto_base(),
+					icon : 'arrow-return-left'
+			},
+			{
+					perform: _ => show_all=!show_all,
+					get icon(){ 
+							return show_all ? "window" : "window-stack"
+					}
+			},
+	]
 	return {
 		oninit(vnode){
 			routes.settile(name)
 			get_galery_element(galery.path,value => galery_elements =  value)
 		},
 		view(vnode) {
-			return <Layout>
+			return <Layout actions={actions} >
 						<h1 class="title"> {name} </h1>
-						<Button onclick={ _=> show_all=!show_all} >
-							<i class={`bi bi-${ show_all ? "window" : "window-stack" }`}/>
-						</Button>
 						{ show_all
 								?<All elements={galery_elements}/>
 								:<Single elements={galery_elements}/>

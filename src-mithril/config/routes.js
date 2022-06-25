@@ -26,6 +26,9 @@ export const routes = {
 		galery:galery
 	});
     },
+	goto_base(){
+		m.route.set('/galeries')
+	},
     settile(title) {
 	    if(title != undefined){
 		 document.title = title;
