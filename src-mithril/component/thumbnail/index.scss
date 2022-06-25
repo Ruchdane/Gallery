@@ -10,6 +10,7 @@
     min-width: 0;
     cursor: pointer;
     word-wrap: break-word;
+	justify-content: space-between;
     background-color: $primary-shade-2;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, .125);
@@ -20,8 +21,9 @@
     }
     img {
         max-width: 100%;
-        height: auto;
-        margin: auto;
+        max-height: 85%;
+		justify-self:center;
+		margin:auto;
         padding: 0.25rem;
         border-radius: 0.25rem;
         box-shadow: var(--shadow-elevation-low);
