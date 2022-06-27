@@ -9,6 +9,23 @@ import './galery.scss'
 var galeries = []
 var actions = [{
 		icon:'folder',
+        tooltip:'Change folder',
+        tooltip_modifier:{
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, 8],
+                },
+              },
+              {
+                name: 'arrow',
+                options: {
+                  padding: 20,
+                },
+              },
+            ],
+          },
 		perform: () => {
 				change_root(
 					_ => get_galeries(value => {
@@ -17,7 +34,30 @@ var actions = [{
 					})
 				)
 		}
-}]
+},{
+    icon:'folder',
+    tooltip:'Change folder',
+    tooltip_modifier:{
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 8],
+            },
+          },
+        ],
+      },
+    perform: () => {
+            change_root(
+                _ => get_galeries(value => {
+                        galeries = value
+                        m.redraw()
+                })
+            )
+    }
+}
+]
+
 
 const Galeries =  {
     oninit(vnode) {

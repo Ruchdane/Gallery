@@ -11,7 +11,7 @@ const header = {
 			<div id="navigation">
 					{
 						vnode.attrs.actions.map(
-								action => <Button type="button" class="secondary" onclick={action.perform}>
+								action => <Button type="button" tooltip_modifier={action.tooltip_modifier} tooltip={action.tooltip}  class="secondary" onclick={action.perform}>
 											<i class={`bi bi-${action.icon}`}/>
 										</Button>
 						)
