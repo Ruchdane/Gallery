@@ -21,9 +21,10 @@ var actions = [{
               {
                 name: 'arrow',
                 options: {
-                  padding: 20,
+                  padding: ({ popper, reference, placement }) =>
+                    popper.width / reference.width,
                 },
-              },
+              }
             ],
           },
 		perform: () => {
@@ -34,27 +35,6 @@ var actions = [{
 					})
 				)
 		}
-},{
-    icon:'folder',
-    tooltip:'Change folder',
-    tooltip_modifier:{
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 8],
-            },
-          },
-        ],
-      },
-    perform: () => {
-            change_root(
-                _ => get_galeries(value => {
-                        galeries = value
-                        m.redraw()
-                })
-            )
-    }
 }
 ]
 
