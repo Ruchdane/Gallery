@@ -2,7 +2,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: npm install  && cd src-tauri && cargo build
+  - init: npm install && npm run build  && cd src-tauri && cargo build
     command: "npm start"
 
 ports:
