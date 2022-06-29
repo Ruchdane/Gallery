@@ -11,11 +11,13 @@ button {
     border:none;
     border-radius: 5px;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    cursor: pointer;
-    &:active{
+	&:not([disabled]){
+		cursor: pointer;
+	}
+    &:not([disabled]):active{
         border: 1px solid $primary-light;
     }
-    &.outlined{
+    &:not([disabled]).outlined{
 	    border: 1px solid $primary-shade-1;
 		&:hover{
 	    	border: 1px solid transparent;
@@ -23,7 +25,7 @@ button {
 		}
 	}
 	
-	&.primary {
+	&:not([disabled]).primary {
 		color: $primary-shade-1;
 	    background-color: $primary-shade-3;
 	    &:hover {
@@ -31,12 +33,15 @@ button {
 			color: $primary-text;
 	    }
 	}
-	&.secondary {
+	&:not([disabled]).secondary {
 	    color: $primary-text;
 	    &:hover {
 			background-color: $primary-shade-3;
 			color: $primary-text;
 	    }
+	}
+	&:disabled{
+		background-color: $primary-shade-5;
 	}
 	
 }

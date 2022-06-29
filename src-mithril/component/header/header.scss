@@ -17,3 +17,10 @@ header{
 .actions{
     display:flex;
 }
+.info {
+    display: flex;
+    align-items: center;
+    * {
+        margin-right: 10px ;
+    }
+}
