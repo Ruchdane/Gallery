@@ -37,7 +37,7 @@ class PaginationObject {
 			index: index,
 			limit: limit,
 			count() {
-				return this.size / this.limit
+				return Math.ceil(this.size / this.limit)
 			},
 			/**
 			 *
@@ -49,10 +49,10 @@ class PaginationObject {
 			},
 
 			prevDisabled() {
-				return this.index == 0 ? "disabled" : ""
+				return this.index == 0
 			},
 			nextDisabled() {
-				return this.index == this.count() ? "disabled" : ""
+				return this.index + 1 == this.count()
 			}
 		}
 	}
@@ -72,8 +72,12 @@ function Pagination(initVnode) {
 		view(vnode) {
 			return <nav aria-label="Page navigation" class='pagination'>
 				<ul>
-					<li class={pagination.prevDisabled()}>
-						<Button tooltip="prev" tooltip_modifier={tooltip_modifier} class="outlined primary"  aria-label="Previous"
+					<li>
+						<Button disabled={pagination.prevDisabled()} 
+							tooltip="prev" 
+							tooltip_modifier={tooltip_modifier} 
+							class="outlined primary"
+							  aria-label="Previous"
 							onclick={_ => {
 								pagination.index = pagination.index - 1
 								vnode.attrs.onchange(pagination)
@@ -84,8 +88,8 @@ function Pagination(initVnode) {
 					</li>
 					{
 						Array.from(new Array(pagination.count()), (_, i) =>
-							<li class={pagination.isCurrent(i)}>
-								<Button class="outlined primary"  onclick={_ => {
+							<li >
+								<Button class={`${pagination.isCurrent(i)} outlined primary`}  onclick={_ => {
 									pagination.index = i
 									vnode.attrs.onchange(pagination)
 								}} >
@@ -93,8 +97,13 @@ function Pagination(initVnode) {
 								</Button>
 							</li>)
 					}
-					<li class={pagination.nextDisabled()}>
-						<Button tooltip="next" tooltip_modifier={tooltip_modifier} class="outlined primary"  aria-label="Next"
+					<li>
+						<Button
+							disabled={pagination.nextDisabled()} 
+						 	tooltip="next"
+							tooltip_modifier={tooltip_modifier} 
+							class="outlined primary"  
+							aria-label="Next"
 							onclick={_ => {
 								pagination.index = pagination.index + i
 								vnode.attrs.onchange(pagination)

@@ -11,4 +11,9 @@
             margin: 0 10px;
         }
     }
+    button:not([disabled]).active{
+        cursor: auto;
+        background-color: $primary-shade-1;
+        color: $primary-text;
+    }
 }
