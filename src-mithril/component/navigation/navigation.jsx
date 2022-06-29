@@ -30,16 +30,12 @@ function Navigation(initialVnode){
 			return <div class="navigation">
 					<div>
 						<Button class="outlined primary" 
-				tooltip_modifier={tooltip_modifier} 
-				tooltip="Last"
+						//FIXME Tooltip bug on nnavigation
+
 				onclick={ _=> update(vnode.attrs,0) } > {"<<"} </Button>
 						<Button class="outlined primary" 
-				tooltip_modifier={tooltip_modifier} 
-				tooltip="prev"
 				onclick={ _=> update(vnode.attrs,vnode.attrs.index-1) }> {"<"} </Button>	
 						<Button class="outlined primary" 
-				tooltip_modifier={tooltip_modifier} 
-				tooltip="random"
 				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
@@ -59,18 +55,12 @@ function Navigation(initialVnode){
 					}
 					<div>
 						<Button class="outlined primary" 
-				tooltip_modifier={tooltip_modifier} 
-				tooltip="random"
 				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
 						<Button class="outlined primary" 
-				tooltip_modifier={tooltip_modifier} 
-				tooltip="next"
 				onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	
 						<Button class="outlined primary" 
-				tooltip_modifier={tooltip_modifier} 
-				tooltip="last"
 				onclick={ _=> update(vnode.attrs,vnode.attrs.limit - 1) }> {">>"} </Button>
 					</div>
 				
