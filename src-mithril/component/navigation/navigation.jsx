@@ -4,6 +4,7 @@ import {random,rounded} from '../../utility.js'
 import './navigation.scss'
 const tooltip_modifier = {
 	modifiers: [
+		
 	  {
 		name: 'offset',
 		options: {
@@ -69,7 +70,7 @@ function Navigation(initialVnode){
 				tooltip="next"
 				onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	
 						<Button class="outlined primary" 
-				tooltip_modifier={action.tooltip_modifier} 
+				tooltip_modifier={tooltip_modifier} 
 				tooltip="last"
 				onclick={ _=> update(vnode.attrs,vnode.attrs.limit - 1) }> {">>"} </Button>
 					</div>
