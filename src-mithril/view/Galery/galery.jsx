@@ -3,7 +3,7 @@
 import m from 'mithril'
 import { file_from_path } from '../../utility.js'
 import { routes } from '../../config/routes'
-import Layout from '../../component/layout/layout'
+import Layout,{layout_tooltip_modifier} from '../../component/layout/layout'
 import Single from '../../component/galery/single'
 import Button from '../../component/button/button.js';
 import  All from '../../component/galery/all'
@@ -56,7 +56,7 @@ function Galery(initialVnode){
 
 	return {
 		oninit(vnode){
-			routes.settile(name)
+			routes.settile(model.name)
 			model.init(vnode.attrs)
 			model.load()
 		},
@@ -64,7 +64,7 @@ function Galery(initialVnode){
 			model.reset()
 		},
 		view(vnode) {
-			return <Layout actions={actions} >
+			return <Layout actions={actions} label={model.name}>
 						<h1 class="title"> {model.name} </h1>
 						{ model.elements.length > 0
 								?model.show_all 

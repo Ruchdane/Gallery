@@ -1,5 +1,5 @@
 import m from 'mithril';
-import { is_undefined } from '../../utility';
+import { file_from_path, is_undefined } from '../../utility';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
 import Tooltip,{setupTooltip} from '../tooltip/tooltip';
 import './index.scss'
@@ -33,7 +33,7 @@ const Thumbnail = {
         var galery = vnode.attrs.galery
         return <>
 		    <Tooltip>
-{ galery.path.slice(galery.path.lastIndexOf('/')+1)}
+          { file_from_path(galery.path)}
 		    </Tooltip>
 		    <div class={`thumbnail ${is_undefined(vnode.attrs.class)}`}>
 	   <img src={convertFileSrc(galery.thumbnail)}>  </img>

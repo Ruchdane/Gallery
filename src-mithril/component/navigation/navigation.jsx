@@ -4,7 +4,6 @@ import {random,rounded} from '../../utility.js'
 import './navigation.scss'
 const tooltip_modifier = {
 	modifiers: [
-		
 	  {
 		name: 'offset',
 		options: {

@@ -26,8 +26,8 @@ const Layout = {
 	view(vnode) {
 		return [
 				m(Navbar,{
-						actions: vnode.attrs.actions == undefined 	? [] 
-						:vnode.attrs.actions}),
+          label: vnode.attrs.label,
+					actions: vnode.attrs.actions  || [] }),
 					m('main',vnode.children)
 		]
 	}

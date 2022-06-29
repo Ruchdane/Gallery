@@ -5,9 +5,12 @@ import './header.scss'
 const header = {
 	view(vnode) {
 		return <header>
-			<m.route.Link href="/galeries">
-				<img src="favicon.svg" width="38" height="30" c alt="Galery" loading="lazy" />
-			</m.route.Link>
+			<div>
+				{vnode.attrs.label || ''}
+				<m.route.Link href="/galeries">
+					<img src="favicon.svg" width="38" height="30" c alt="Galery" loading="lazy" />
+				</m.route.Link>
+			</div>
 			<div class='actions'>
 					{
 						vnode.attrs.actions.map(
