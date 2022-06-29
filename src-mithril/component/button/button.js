@@ -10,7 +10,7 @@ const Button = {
     },
     view(vnode){
         return m('',
-        m(Tooltip,vnode.attrs.tooltip),
+        vnode.attrs.tooltip ? m(Tooltip,vnode.attrs.tooltip) : null,
         m('button',{
 		onclick:vnode.attrs.onclick,
 		class: `${is_undefined(vnode.attrs.class)}`
