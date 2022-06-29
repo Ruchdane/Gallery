@@ -9,7 +9,15 @@ import { get_galeries,change_root } from '../../controller/galery'
 import './galery.scss'
 
 var galeries = []
-var actions = [{
+//HOTFIXE for reload bug
+var actions = [,
+    {
+		icon:'arrow-clockwise',
+        tooltip:'Reload',
+        tooltip_modifier:layout_tooltip_modifier(),
+		perform: _ => m.redraw()
+},
+    {
 		icon:'folder',
         tooltip:'Change folder',
         tooltip_modifier:layout_tooltip_modifier(),
