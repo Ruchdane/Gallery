@@ -5,11 +5,11 @@ import './header.scss'
 const header = {
 	view(vnode) {
 		return <header>
-			<div>
-				{vnode.attrs.label || ''}
+			<div class='info'>
 				<m.route.Link href="/galeries">
 					<img src="favicon.svg" width="38" height="30" c alt="Galery" loading="lazy" />
 				</m.route.Link>
+				<span >{vnode.attrs.label || ''}</span>
 			</div>
 			<div class='actions'>
 					{
