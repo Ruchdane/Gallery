@@ -1,8 +1,7 @@
 import m from 'mithril'
 import './pagination.scss'
 import Select from '../select/select'
-import Button from '../Button/Button'
-import Tooltip from '../tooltip/tooltip'
+import Button from '../button/button'
 
 const tooltip_modifier = {
 	placement: 'top',
