@@ -1,5 +1,5 @@
 import m from 'mithril'
-import Layout from '../../component/layout/layout'
+import Layouti,{  layout_tooltip_modifier } from '../../component/layout/layout'
 import Thumbnail from '../../component/thumbnail'
 import { routes } from '../../config/routes'
 import { get_galeries,change_root } from '../../controller/galery'
@@ -10,23 +10,7 @@ var galeries = []
 var actions = [{
 		icon:'folder',
         tooltip:'Change folder',
-        tooltip_modifier:{
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, 8],
-                },
-              },
-              {
-                name: 'arrow',
-                options: {
-                  padding: ({ popper, reference, placement }) =>
-                    popper.width / reference.width,
-                },
-              }
-            ],
-          },
+        tooltip_modifier:layout_tooltip_modifier(),
 		perform: () => {
 				change_root(
 					_ => get_galeries(value => {

@@ -2,7 +2,24 @@ import m from 'mithril'
 import Button from '../button/button.js'
 import {random,rounded} from '../../utility.js'
 import './navigation.scss'
-
+const tooltip_modifier = {
+	modifiers: [
+	  {
+		name: 'offset',
+		options: {
+		  offset: [0, 8],
+		},
+	  },
+	  {
+		name: 'arrow',
+		options: {
+		  padding: ({ popper, reference, placement }) =>
+			popper.width / reference.width,
+		},
+	  }
+	],
+  }
+  
 function Navigation(initialVnode){
 	function update(attrs,value){
 		attrs.onchange(rounded(value,attrs.limit))
@@ -12,9 +29,18 @@ function Navigation(initialVnode){
 		view(vnode){
 			return <div class="navigation">
 					<div>
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,0) } > {"<<"} </Button>
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,vnode.attrs.index-1) }> {"<"} </Button>	
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
+						<Button class="outlined primary" 
+				tooltip_modifier={tooltip_modifier} 
+				tooltip="Last"
+				onclick={ _=> update(vnode.attrs,0) } > {"<<"} </Button>
+						<Button class="outlined primary" 
+				tooltip_modifier={tooltip_modifier} 
+				tooltip="prev"
+				onclick={ _=> update(vnode.attrs,vnode.attrs.index-1) }> {"<"} </Button>	
+						<Button class="outlined primary" 
+				tooltip_modifier={tooltip_modifier} 
+				tooltip="random"
+				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
 					</div>
@@ -32,11 +58,20 @@ function Navigation(initialVnode){
 						},vnode.attrs.index+1)
 					}
 					<div>
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
+						<Button class="outlined primary" 
+				tooltip_modifier={tooltip_modifier} 
+				tooltip="random"
+				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
 							<i class="bi bi-dice-5-fill"/>
 						</Button>
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	
-						<Button class="outlined primary" onclick={ _=> update(vnode.attrs,vnode.attrs.limit - 1) }> {">>"} </Button>
+						<Button class="outlined primary" 
+				tooltip_modifier={tooltip_modifier} 
+				tooltip="next"
+				onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	
+						<Button class="outlined primary" 
+				tooltip_modifier={action.tooltip_modifier} 
+				tooltip="last"
+				onclick={ _=> update(vnode.attrs,vnode.attrs.limit - 1) }> {">>"} </Button>
 					</div>
 				
 				</div>

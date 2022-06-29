@@ -37,10 +37,16 @@ const model = {
 var actions = [
 		{
 				perform: _ => routes.goto_base(),
-				icon : 'arrow-return-left'
+				icon : 'arrow-return-left',
+			tooltip:"return",
+			tooltip_modifier:layout_tooltip_modifier(),
 		},
 		{
 				perform: _ => model.s_witch(),
+			get tooltip() { 
+				return model.show_all ? "Single" : "Multiple"
+				},
+			tooltip_modifier:layout_tooltip_modifier(),
 				get icon(){ 
 						return model.show_all ? "window" : "window-stack"
 				}
