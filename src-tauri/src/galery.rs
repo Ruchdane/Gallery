@@ -7,6 +7,7 @@ use std::path::Path;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Galery {
+    name:String,
     path: String,
     size: u16,
     thumbnail: String,
@@ -50,10 +51,15 @@ impl Galery {
         Ok(medias)
     }
     fn new(galery_path: &Path) -> io::Result<Galery> {
+        let name = match galery_path.file_name() {
+            Some(name) => name.to_string_lossy().to_string(),
+            None => "".to_string()
+        };
         let path = galery_path.to_string_lossy().to_string();
         let size = Self::get_galery_size(galery_path)?;
         let thumbnail = Self::get_galery_thumbnail(galery_path)?;
         Ok(Self {
+            name,
             path,
             size,
             thumbnail,
