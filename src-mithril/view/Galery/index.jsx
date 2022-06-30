@@ -1,84 +1,99 @@
 import m from 'mithril'
-import { Pagination, PaginationObject  } from "../../component/pagination/pagination";
-import Layout,{  layout_tooltip_modifier } from '../../component/layout/layout'
+import { Pagination, PaginationObject } from "../../component/pagination/pagination";
+import Layout, { layout_tooltip_modifier } from '../../component/layout/layout'
 import Thumbnail from '../../component/thumbnail'
 import { routes } from '../../config/routes'
-import { get_galeries,change_root, get_galery } from '../../controller/galery'
+import { get_galeries, change_root, get_galery } from '../../controller/galery'
 
 import './galery.scss'
-
-var galeries = []
-//HACK for reload bug
-var actions = [,
-    {
-		icon:'arrow-clockwise',
-        tooltip:'Reload',
-        tooltip_modifier:layout_tooltip_modifier(),
-		perform: _ => m.redraw()
-},
-    {
-		icon:'folder',
-        tooltip:'Change folder',
-        tooltip_modifier:layout_tooltip_modifier(),
-		perform: () => {
-				change_root(
-					_ => get_galeries(value => {
-							galeries = value
-							m.redraw()
-					})
-				)
-		}
-}
-]
-
-
-const Galeries =  {
-    root:{
-        name:"",
-        path: "",
-        size: 0,
-        thumbnail: "",
-    },
+const model = {
     filter: "",
     /**
      * @type PaginationObject
      */
-    pagination: new PaginationObject(0,0,16),
-    value(){
-        var filtred = galeries.filter(galery => galery.name.includes(this.filter))
-        var begin = this.pagination.limit * this.pagination.index
-        const possible_end = this.pagination.limit * (this.pagination.index + 1);
-        var end = possible_end + 1 > filtred.length ? filtred.length - 1 : possible_end; 
-        return filtred.slice(begin,end)
+    pagination: new PaginationObject(0, 0, 16),
+    root: {
+        name: "",
+        path: "",
+        size: 0,
+        thumbnail: "",
     },
-    oninit(vnode) {
+    galeries: [],
+    value:[],
+    set_filter(e){
+        this.filter = e.target.value
+        this.update_value()
+    },
+    set_pagination(){
+        this.pagination = value
+        this.update_value()
+    },
+    load() {
         // routes.settile(this.root.name)
-        get_galery(value => { this.root = value })
-       	get_galeries(value => {
-               galeries = value 
-               Galeries.pagination = new PaginationObject(galeries.length,0,16)
+        get_galery(value => { model.root = value })
+        get_galeries(value => {
+            model.galeries = value
+            model.pagination = new PaginationObject(model.galeries.length, 0, 16)
+            model.update_value()
+
         })
     },
+    update_value() {
+        var filtred = this.galeries.filter(galery => galery.name.includes(this.filter))
+        var begin = this.pagination.limit * this.pagination.index
+        const possible_end = this.pagination.limit * (this.pagination.index + 1);
+        var end = possible_end + 1 > filtred.length ? filtred.length - 1 : possible_end;
+        this.value = filtred.slice(begin, end)
+    },
+
+}
+var galeries = []
+//HACK for reload bug
+var actions = [,
+    {
+        icon: 'arrow-clockwise',
+        tooltip: 'Reload',
+        tooltip_modifier: layout_tooltip_modifier(),
+        perform: _ => m.redraw()
+    },
+    {
+        icon: 'folder',
+        tooltip: 'Change folder',
+        tooltip_modifier: layout_tooltip_modifier(),
+        perform: () => {
+            change_root(
+                _ =>  {
+                    model.load()
+                    m.redraw()
+            })
+        }
+    }
+]
+
+
+const Galeries = {
+    oninit: model.load,
+    onupdate: model.load,
     view() {
-        return <Layout 
-        actions={actions}
-        label={`${this.root.name}(${galeries.length})`}
+        return <Layout
+            actions={actions}
+            label={`${model.root.name}(${model.galeries.length})`}
         >
-            <div class="title"> {this.root.name} </div>
+            <div class="title"> {model.root.name} </div>
             {/*TODO onchange or oninput which is better*/}
-            <div class='filter'> 
-                <input type="search" placeholder="Filter" value={this.filter} onchange={(e)=> this.filter = e.target.value} /> 
+            <div class='filter'>
+                <input type="search" placeholder="Filter" value={model.filter} onchange={model.set_filter} />
             </div>
-            <Pagination pagination={this.pagination} onchange={ value => this.pagination = value}/>
+            <Pagination pagination={model.pagination} onchange={model.set_pagination} />
             <div>
-                
+
             </div>
-            <div class='grid'> 
-            {
-                this.value().map(galery => m('.row',{onclick: _ => routes.open_galery(galery)},
-			m(Thumbnail, { galery:galery}))
-		)
-            }
+            <div class='grid'>
+                {
+                    model.value.map(galery => m('.row', { onclick: _ => routes.open_galery(galery) },
+                        m(Thumbnail, { galery: galery }))
+                    )
+                }
             </div>
         </Layout>
     }
