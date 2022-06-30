@@ -1,5 +1,6 @@
 use crate::error::unwrap_or_return_to_string;
-use crate::setting::get_user_settings;
+use crate::setting::SettingState;
+use tauri::State;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::io;
@@ -83,15 +84,15 @@ impl Media {
 }
 
 #[tauri::command]
-pub fn get_galery() -> Result<Galery, String> {
-    let path = get_user_settings().unwrap().path;
-    let path = Path::new(&path);
-    Ok(unwrap_or_return_to_string!(Galery::new(path)))
+pub fn get_galery(state: State<SettingState>) -> Result<Galery, String> {
+    let setting =  state.0.lock().unwrap();
+    Ok(unwrap_or_return_to_string!(Galery::new(Path::new(setting.path()))))
 }
 
 #[tauri::command]
-pub fn get_galeries() -> Result<Vec<Galery>, String> {
-    let path = get_user_settings().unwrap().path;
+pub fn get_galeries(state: State<SettingState>) -> Result<Vec<Galery>, String> {
+    let setting = state.0.lock().unwrap();
+    let path = setting.path();
     let entries = match fs::read_dir(path) {
         Ok(value) => value
             .map(|res| res.map(|e| e.path()))
@@ -102,7 +103,10 @@ pub fn get_galeries() -> Result<Vec<Galery>, String> {
     for entry in entries {
         let entry = unwrap_or_return_to_string!(entry);
         if entry.is_dir() {
-            galerys.push(unwrap_or_return_to_string!(Galery::new(&entry.as_path())))
+            let galery = unwrap_or_return_to_string!(Galery::new(&entry.as_path()));
+            if galery.size != 0 {    
+                galerys.push(galery)
+            }
         }
     }
 
