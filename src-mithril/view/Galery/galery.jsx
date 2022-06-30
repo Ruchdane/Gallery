@@ -1,7 +1,6 @@
 //FIXME UI not updating after galery media are loaded
 //HOTFIX Reassign elements in single media view component
 import m from 'mithril'
-import { file_from_path } from '../../utility.js'
 import { routes } from '../../config/routes'
 import Layout,{layout_tooltip_modifier} from '../../component/layout/layout'
 import Single from '../../component/galery/single'
@@ -19,7 +18,7 @@ const model = {
 		},
 		init(attrs){
 			this.galery = attrs.galery
-			this.name = file_from_path(this.galery.path)
+			this.name = this.galery.name
 		},
 		load(){
 			get_galery_media(this.galery,elements=> { 
