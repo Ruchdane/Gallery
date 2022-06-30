@@ -43,15 +43,16 @@
 
         @include responsive($md) {
             flex: 1 1 auto;
-
         }
 
         @include responsive($sm) {
             flex: 1 1 auto;
+            width: 25%;
         }
 
         @include responsive($xs) {
             flex: 1 1 auto;
+            width: 50%;
         }
 
     }
