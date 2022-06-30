@@ -21,12 +21,12 @@ const model = {
     galeries: [],
     value:[],
     set_filter(e){
-        this.filter = e.target.value
-        this.update_value()
+        model.filter = e.target.value
+        model.update_value()
     },
-    set_pagination(){
-        this.pagination = value
-        this.update_value()
+    set_pagination(value){
+        model.pagination = value
+        model.update_value()
     },
     load() {
         // routes.settile(this.root.name)
@@ -43,6 +43,7 @@ const model = {
         var begin = this.pagination.limit * this.pagination.index
         const possible_end = this.pagination.limit * (this.pagination.index + 1);
         var end = possible_end + 1 > filtred.length ? filtred.length - 1 : possible_end;
+        if(begin == end) end = end + 1;
         this.value = filtred.slice(begin, end)
     },
 

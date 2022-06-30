@@ -67,9 +67,10 @@ function Pagination(initVnode) {
 	/**
 	 * @type PaginationObject
 	 */
-	var pagination = initVnode.attrs.pagination
+
 	return {
 		view(vnode) {
+			const pagination = vnode.attrs.pagination
 			return <nav aria-label="Page navigation" class='pagination'>
 				<ul>
 					<li>

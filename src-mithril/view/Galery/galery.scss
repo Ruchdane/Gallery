@@ -26,9 +26,9 @@
     display: flex;
 	flex-wrap: wrap;
     gap: 10px;
-    margin: 10px;
+    margin: 10px 30px;
 	padding: 10px;
-	justify-content: center;
+	justify-content: flex-start;
     .row {
         max-width: 200px;
         height: 250px;
