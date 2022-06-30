@@ -10,7 +10,11 @@ import { open } from '@tauri-apps/api/dialog';
  * @property {string} thumbnail - an optional number property of SpecialType
  */
 
-
+export function get_galery(callback){
+	invoke("get_galery")
+    .then(value=>callback(value))
+    .catch(error=>log(error))	
+}
 export function get_galeries(callback) {
 	/*
 	 * Decommennt to use in frontend without rust

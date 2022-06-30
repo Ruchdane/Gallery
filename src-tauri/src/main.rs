@@ -3,9 +3,6 @@
     windows_subsystem = "windows"
 )]
 
-use mime_guess;
-use std::fs::{canonicalize, read};
-use tauri::http::ResponseBuilder;
 mod error;
 mod galery;
 mod setting;
@@ -14,8 +11,9 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             setting::get_user_settings,
             setting::change_root,
-            galery::get_galeries,
-            galery::get_galery_media
+            galery::get_galery,
+            galery::get_galery_media,
+            galery::get_galeries
         ])
 //        .register_uri_scheme_protocol("outside", move |_app, request| {
             // FIXME file with multipl dot have a problem like 1.2.jpg

@@ -83,6 +83,13 @@ impl Media {
 }
 
 #[tauri::command]
+pub fn get_galery() -> Result<Galery, String> {
+    let path = get_user_settings().unwrap().path;
+    let path = Path::new(&path);
+    Ok(unwrap_or_return_to_string!(Galery::new(path)))
+}
+
+#[tauri::command]
 pub fn get_galeries() -> Result<Vec<Galery>, String> {
     let path = get_user_settings().unwrap().path;
     let entries = match fs::read_dir(path) {
