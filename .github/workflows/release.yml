@@ -1,7 +1,9 @@
 name: 'Release'
 
-on: pull_request
-
+on:
+  pull_request:
+    branches:
+    - release
 jobs:
   create-release:
     runs-on: ubuntu-latest
