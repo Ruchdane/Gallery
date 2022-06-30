@@ -1,5 +1,5 @@
 //FIXME UI not updating after galery media are loaded
-//HOTFIX Reassign elements in single media view component
+//HACK Reassign elements in single media view component
 import m from 'mithril'
 import { routes } from '../../config/routes'
 import Layout,{layout_tooltip_modifier} from '../../component/layout/layout'

@@ -8,7 +8,7 @@ import { get_galeries,change_root, get_galery } from '../../controller/galery'
 import './galery.scss'
 
 var galeries = []
-//HOTFIXE for reload bug
+//HACK for reload bug
 var actions = [,
     {
 		icon:'arrow-clockwise',

@@ -34,7 +34,7 @@ impl Galery {
                 return Ok(path.to_string_lossy().to_string());
             }
         }
-        // HOTFIXES
+        // HACK
         // Using default thumbnail none for now
         return Ok("unknown/thumbnail".to_string())
     }
