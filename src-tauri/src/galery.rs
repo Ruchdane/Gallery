@@ -1,5 +1,6 @@
 use crate::error::unwrap_or_return_to_string;
-use crate::setting::get_user_settings;
+use crate::setting::SettingState;
+use tauri::State;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::io;
@@ -7,6 +8,7 @@ use std::path::Path;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Galery {
+    name:String,
     path: String,
     size: u16,
     thumbnail: String,
@@ -33,7 +35,7 @@ impl Galery {
                 return Ok(path.to_string_lossy().to_string());
             }
         }
-        // HOTFIXES
+        // HACK
         // Using default thumbnail none for now
         return Ok("unknown/thumbnail".to_string())
     }
@@ -50,11 +52,15 @@ impl Galery {
         Ok(medias)
     }
     fn new(galery_path: &Path) -> io::Result<Galery> {
+        let name = match galery_path.file_name() {
+            Some(name) => name.to_string_lossy().to_string(),
+            None => "".to_string()
+        };
         let path = galery_path.to_string_lossy().to_string();
         let size = Self::get_galery_size(galery_path)?;
         let thumbnail = Self::get_galery_thumbnail(galery_path)?;
-        let thumbnail = Media::convert_url(&thumbnail);
         Ok(Self {
+            name,
             path,
             size,
             thumbnail,
@@ -72,18 +78,21 @@ impl Media {
     pub fn new(path: &Path) -> io::Result<Self> {
         
         let src = path.to_string_lossy().to_string();
-        let src = Self::convert_url(&src);
         let r#type = "image".to_string();
         Ok(Self { src, r#type })
-    }
-    pub fn convert_url(url: &String) -> String{
-        format!("outside://{}",url)
     }
 }
 
 #[tauri::command]
-pub fn get_galeries() -> Result<Vec<Galery>, String> {
-    let path = get_user_settings().unwrap().path;
+pub fn get_galery(state: State<SettingState>) -> Result<Galery, String> {
+    let setting =  state.0.lock().unwrap();
+    Ok(unwrap_or_return_to_string!(Galery::new(Path::new(setting.path()))))
+}
+
+#[tauri::command]
+pub fn get_galeries(state: State<SettingState>) -> Result<Vec<Galery>, String> {
+    let setting = state.0.lock().unwrap();
+    let path = setting.path();
     let entries = match fs::read_dir(path) {
         Ok(value) => value
             .map(|res| res.map(|e| e.path()))
@@ -94,7 +103,10 @@ pub fn get_galeries() -> Result<Vec<Galery>, String> {
     for entry in entries {
         let entry = unwrap_or_return_to_string!(entry);
         if entry.is_dir() {
-            galerys.push(unwrap_or_return_to_string!(Galery::new(&entry.as_path())))
+            let galery = unwrap_or_return_to_string!(Galery::new(&entry.as_path()));
+            if galery.size != 0 {    
+                galerys.push(galery)
+            }
         }
     }
 

@@ -1,0 +1,15 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: npm install && npm run build  && cd src-tauri && cargo build
+    command: "npm start"
+
+ports:
+  - name: VNC UI
+    port: 6080
+    onOpen: open-browser
+
+github:
+  prebuilds:
+    addCheck: true

@@ -26,9 +26,9 @@
     display: flex;
 	flex-wrap: wrap;
     gap: 10px;
-    margin: 10px;
+    margin: 10px 30px;
 	padding: 10px;
-	justify-content: center;
+	justify-content: flex-start;
     .row {
         max-width: 200px;
         height: 250px;
@@ -43,15 +43,16 @@
 
         @include responsive($md) {
             flex: 1 1 auto;
-
         }
 
         @include responsive($sm) {
             flex: 1 1 auto;
+            width: 25%;
         }
 
         @include responsive($xs) {
             flex: 1 1 auto;
+            width: 50%;
         }
 
     }

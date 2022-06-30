@@ -1,5 +1,6 @@
 import m from 'mithril'
 import Navigation from '../navigation/navigation.jsx'
+import { convertFileSrc } from '@tauri-apps/api/tauri';
 import {rounded} from '../../utility.js'
 import './index.scss'
 
@@ -34,7 +35,7 @@ function  Single(initialVnode) {
 			return <div class="viewport">
 				<Navigation index={index} limit={elements.length} onchange={(value) => index = value}/>
 				<div class="img-container" onclick={clickHandler}>
-					<img class="fit" src={elements[index].src}/>
+					<img class="fit" src={convertFileSrc(elements[index].src)}/>
 				</div>
 				<Navigation index={index} limit={elements.length} onchange={(value) => index = value}/>
 				</div>

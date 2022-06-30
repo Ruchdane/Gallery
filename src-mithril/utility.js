@@ -12,6 +12,3 @@ export function is_undefined(value){
 	return value == undefined ? '':value;
 }
 
-export function file_from_path(path){
-	return path.slice(path.lastIndexOf('/')+1)
-}

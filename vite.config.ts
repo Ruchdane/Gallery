@@ -18,6 +18,9 @@ export default defineConfig({
   // env variables
   envPrefix: ['VITE_', 'TAURI_'],
   build: {
+    rollupOptions:{
+      input:['index.html']
+    },
     // Tauri supports es2021
     target: ['es2021', 'chrome97', 'safari13'],
     // don't minify for debug builds

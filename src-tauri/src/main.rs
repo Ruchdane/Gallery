@@ -3,33 +3,31 @@
     windows_subsystem = "windows"
 )]
 
-use mime_guess;
-use std::fs::{canonicalize, read};
-use tauri::http::ResponseBuilder;
+use std::sync::Mutex;
+
+use setting::{Setting, SettingState};
+use tauri::Manager;
+
+
 mod error;
 mod galery;
 mod setting;
+mod db;
 fn main() {
     tauri::Builder::default()
+    .setup(|app| {
+      let handle = app.handle();
+      let setting = Setting::get(&handle);
+      app.manage(SettingState(Mutex::new(setting)));
+      Ok(())
+    })
         .invoke_handler(tauri::generate_handler![
             setting::get_user_settings,
             setting::change_root,
-            galery::get_galeries,
-            galery::get_galery_media
+            galery::get_galery,
+            galery::get_galery_media,
+            galery::get_galeries
         ])
-        .register_uri_scheme_protocol("outside", move |_app, request| {
-            // FIXME file with multipl dot have a problem like 1.2.jpg
-            let not_found = ResponseBuilder::new().status(404).body(Vec::new());
-//            let internal_error = ResponseBuilder::new().status(500).body(Vec::new());
-            let path = request.uri().replace("outside://", "");
-            let content = unwrap_or_return!(
-                read(unwrap_or_return!(canonicalize(&path), not_found)),
-                not_found
-            );
-            let guess = mime_guess::from_path(path).first_or_text_plain();
-            let meta = guess.to_string();
-            ResponseBuilder::new().mimetype(&meta).body(content)
-        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

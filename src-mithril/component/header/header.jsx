@@ -5,13 +5,16 @@ import './header.scss'
 const header = {
 	view(vnode) {
 		return <header>
-			<m.route.Link href="/galery">
-				<img src="favicon.svg" width="38" height="30" c alt="Galery" loading="lazy" />
-			</m.route.Link>
-			<div id="navigation">
+			<div class='info'>
+				<m.route.Link href="/galeries">
+					<img src="favicon.svg" width="38" height="30" c alt="Galery" loading="lazy" />
+				</m.route.Link>
+				<span >{vnode.attrs.label || ''}</span>
+			</div>
+			<div class='actions'>
 					{
 						vnode.attrs.actions.map(
-								action => <Button type="button" class="secondary" onclick={action.perform}>
+								action => <Button type="button" tooltip_modifier={action.tooltip_modifier} tooltip={action.tooltip}  class="secondary" onclick={action.perform}>
 											<i class={`bi bi-${action.icon}`}/>
 										</Button>
 						)
