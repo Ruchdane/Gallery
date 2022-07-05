@@ -1,9 +1,9 @@
 import m from 'mithril'
 import { Pagination, PaginationObject } from "../../component/pagination/pagination";
-import Layout, { layout_tooltip_modifier } from '../../component/layout/layout'
+import Layout, { layoutTooltipModifier } from '../../component/layout/layout'
 import Thumbnail from '../../component/thumbnail'
 import { routes } from '../../config/routes'
-import { get_galeries, change_root, get_galery } from '../../controller/galery'
+import { getGaleries, changeRoot, getGalery } from '../../controller/galery'
 
 import './galery.scss'
 const model = {
@@ -30,8 +30,8 @@ const model = {
     },
     load() {
         // routes.settile(this.root.name)
-        get_galery(value => { model.root = value })
-        get_galeries(value => {
+        getGalery(value => { model.root = value })
+        getGaleries(value => {
             model.galeries = value
             model.pagination = new PaginationObject(model.galeries.length, 0, 16)
             model.update_value()
@@ -43,7 +43,7 @@ const model = {
         var begin = this.pagination.limit * this.pagination.index
         const possible_end = this.pagination.limit * (this.pagination.index + 1);
         var end = possible_end + 1 > filtred.length ? filtred.length - 1 : possible_end;
-        if(begin == end) end = end + 1;
+        if(begin === end) end = end + 1;
         this.value = filtred.slice(begin, end)
     },
 
@@ -54,15 +54,15 @@ var actions = [,
     {
         icon: 'arrow-clockwise',
         tooltip: 'Reload',
-        tooltip_modifier: layout_tooltip_modifier(),
+        tooltip_modifier: layoutTooltipModifier(),
         perform: _ => m.redraw()
     },
     {
         icon: 'folder',
         tooltip: 'Change folder',
-        tooltip_modifier: layout_tooltip_modifier(),
+        tooltip_modifier: layoutTooltipModifier(),
         perform: () => {
-            change_root(
+            changeRoot(
                 _ =>  {
                     model.load()
                     m.redraw()

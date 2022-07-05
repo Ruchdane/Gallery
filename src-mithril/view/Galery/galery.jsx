@@ -2,11 +2,11 @@
 //HACK Reassign elements in single media view component
 import m from 'mithril'
 import { routes } from '../../config/routes'
-import Layout,{layout_tooltip_modifier} from '../../component/layout/layout'
+import Layout,{layoutTooltipModifier} from '../../component/layout/layout'
 import Single from '../../component/galery/single'
 import Button from '../../component/button/button.js';
 import  All from '../../component/galery/all'
-import { get_galery_media } from '../../controller/galery.js'
+import { getGaleryMedia } from '../../controller/galery.js'
 import './galery.scss'
 const model = {
 		galery:undefined,
@@ -21,7 +21,7 @@ const model = {
 			this.name = this.galery.name
 		},
 		load(){
-			get_galery_media(this.galery,elements=> { 
+			getGaleryMedia(this.galery,elements=> { 
 					model.elements = elements
 					m.redraw()
 			})
@@ -38,14 +38,14 @@ var actions = [
 				perform: _ => routes.goto_base(),
 				icon : 'arrow-return-left',
 			tooltip:"return",
-			tooltip_modifier:layout_tooltip_modifier(),
+			tooltip_modifier:layoutTooltipModifier(),
 		},
 		{
 				perform: _ => model.s_witch(),
 			get tooltip() { 
 				return model.show_all ? "Single" : "Multiple"
 				},
-			tooltip_modifier:layout_tooltip_modifier(),
+			tooltip_modifier:layoutTooltipModifier(),
 				get icon(){ 
 						return model.show_all ? "window" : "window-stack"
 				}

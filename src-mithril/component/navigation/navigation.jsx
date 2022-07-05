@@ -2,7 +2,9 @@ import m from 'mithril'
 import Button from '../button/button.js'
 import {random,rounded} from '../../utility.js'
 import './navigation.scss'
-const tooltip_modifier = {
+// Tooltip bug
+// eslint-disable-next-line no-unused-vars
+const tooltipModifier = {
 	modifiers: [
 	  {
 		name: 'offset',
@@ -24,25 +26,25 @@ function Navigation(initialVnode){
 	function update(attrs,value){
 		attrs.onchange(rounded(value,attrs.limit))
 	}
-	var edit = false
+	let edit = false
 	return {
 		view(vnode){
-			return <div class="navigation">
+			return <div className="navigation">
 					<div>
 						<Button class="outlined primary" 
-						//FIXME Tooltip bug on nnavigation
+						// FIXME Tooltip bug on nnavigation
 
 				onclick={ _=> update(vnode.attrs,0) } > {"<<"} </Button>
 						<Button class="outlined primary" 
 				onclick={ _=> update(vnode.attrs,vnode.attrs.index-1) }> {"<"} </Button>	
 						<Button class="outlined primary" 
 				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
-							<i class="bi bi-dice-5-fill"/>
+							<i className="bi bi-dice-5-fill"/>
 						</Button>
 					</div>
 					{!edit 
 						? m('label',{
-							onclick: _ => edit=!edit
+							onclick: _ => (edit=!edit)
 						},`${vnode.attrs.index + 1} / ${vnode.attrs.limit}`)
 						: m('input',{
 							type:"number",
@@ -56,7 +58,7 @@ function Navigation(initialVnode){
 					<div>
 						<Button class="outlined primary" 
 				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
-							<i class="bi bi-dice-5-fill"/>
+							<i className="bi bi-dice-5-fill"/>
 						</Button>
 						<Button class="outlined primary" 
 				onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	

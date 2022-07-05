@@ -5,7 +5,8 @@
     },
     "extends": [
         "standard",
-        "prettier"
+        "prettier",
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -14,6 +15,19 @@
             "jsx": true
         }
     },
-    "rules": {
+    "rules": {},
+    "settings": {
+        "react": {
+            "pragma": "m",
+            "version": "18.2.0"
+        },
+        "linkComponents": [
+            // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+            "Hyperlink",
+            {
+                "name": "m.route.Link",
+                "linkAttribute": "href"
+            }
+        ]
     }
 }

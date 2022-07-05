@@ -45,14 +45,14 @@ class PaginationObject {
 			 * @returns
 			 */
 			isCurrent(i) {
-				return this.index == i ? "active" : ""
+				return this.index === i ? "active" : ""
 			},
 
 			prevDisabled() {
-				return this.index == 0
+				return this.index === 0
 			},
 			nextDisabled() {
-				return this.index + 1 == this.count()
+				return this.index + 1 === this.count()
 			}
 		}
 	}
