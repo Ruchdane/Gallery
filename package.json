@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "prettier '**/*.{js,jx}' --write",
-    "lint": "eslint '**/*.{js,jx}' --fix"
+    "format": "prettier '**/*.{js,jsx}' --write",
+    "lint": "eslint '**/*.{js,jsx}' --fix"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.0",

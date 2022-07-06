@@ -15,7 +15,10 @@
             "jsx": true
         }
     },
-    "rules": {},
+    "rules": {
+        "react/no-unknown-property": 0,
+        "react/jsx-uses-vars":1
+    },
     "settings": {
         "react": {
             "pragma": "m",
