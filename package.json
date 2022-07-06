@@ -8,10 +8,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "prettier '**/*.{js,jx}' --write",
-    "lint": "eslint '**/*.{js,jx}' --fix",
+    "format": "prettier '**/*.{js,jsx}' --write",
+    "lint": "eslint '**/*.{js,jsx}' --fix",
     "test:unit": "ospec  'src-mithril/component/__tests__/*.spec.js'"
-
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.0",
@@ -24,6 +23,7 @@
     "jsdom": "^20.0.0",
     "mithril-query": "^4.0.1",
     "ospec": "^4.1.6",
+    "eslint-plugin-react": "^7.30.1",
     "prettier": "2.7.1",
     "sass": "^1.53.0",
     "vite": "^2.9.9",
