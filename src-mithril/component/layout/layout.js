@@ -1,5 +1,5 @@
 import m from "mithril";
-import Navbar from "../header/header";
+import Navbar from "../navbar/navbar";
 import "./layout.scss";
 export function layoutTooltipModifier() {
     return {
