@@ -1,5 +1,4 @@
 import m from "mithril";
-import { isUndefined } from "../../utility";
 import { convertFileSrc } from "@tauri-apps/api/tauri";
 import Tooltip, { setupTooltip } from "../tooltip/tooltip";
 import "./index.scss";
@@ -28,15 +27,15 @@ const Thumbnail = {
         /**
          * @type galery
          */
-        const galery = vnode.attrs.galery;
-        return (
+        const galery = vnode.attrs;
+        return galery === undefined ? null : (
             <>
                 <Tooltip>{galery.name}</Tooltip>
-                <div class={`thumbnail ${isUndefined(vnode.attrs.class)}`}>
+                <div class={`thumbnail ${vnode.attrs.class || ""}`}>
                     <img src={convertFileSrc(galery.thumbnail)}> </img>
                     <div class="description">
-                        <label class="name"> {galery.name} </label>
-                        <label class="size"> {galery.size} </label>
+                        <label class="name"> {galery.name || ""} </label>
+                        <label class="size"> {galery.size || ""} </label>
                     </div>
                 </div>
             </>

@@ -22,96 +22,141 @@ const tooltipModifier = {
     ],
 };
 
+export function NavigationObject(index, limit, edit = false) {
+    return {
+        index,
+        limit,
+        edit,
+        first() {
+            this.index = 0;
+        },
+
+        firstDisabled() {
+            return this.index === 0;
+        },
+
+        next() {
+            this.index = rounded(this.index + 1, this.limit);
+        },
+
+        random() {
+            random(0, this.limit - 1);
+        },
+
+        toogleEdit() {
+            this.edit = !this.edit;
+        },
+
+        prev() {
+            this.index = rounded(this.index - 1, this.limit);
+        },
+
+        lastDisabled() {
+            return this.index === this.limit - 1;
+        },
+
+        last() {
+            this.index = this.limit - 1;
+        },
+    };
+}
+
 function Navigation(initialVnode) {
-    function update(attrs, value) {
-        attrs.onchange(rounded(value, attrs.limit));
-    }
-    let edit = false;
     return {
         view(vnode) {
+            /**
+             * @type NavigationObject
+             */
+            const navigation = vnode.attrs.navigation;
+            const update = vnode.attrs.update;
             return (
                 <div className="navigation">
                     <div>
                         <Button
                             class="outlined primary"
-                            // FIXME Tooltip bug on nnavigation
-
-                            onclick={(_) => update(vnode.attrs, 0)}>
-                            {" "}
-                            {"<<"}{" "}
+                            // FIXME Tooltip bug on navigation
+                            aria-label="First"
+                            disabled={navigation.firstDisabled()}
+                            onclick={(_) => {
+                                navigation.first();
+                                update(navigation);
+                            }}>
+                            {"<<"}
                         </Button>
                         <Button
                             class="outlined primary"
-                            onclick={(_) =>
-                                update(vnode.attrs, vnode.attrs.index - 1)
-                            }>
-                            {" "}
-                            {"<"}{" "}
+                            aria-label="Previous"
+                            disabled={navigation.firstDisabled()}
+                            onclick={(_) => {
+                                navigation.prev();
+                                update(navigation);
+                            }}>
+                            {"<"}
                         </Button>
                         <Button
                             class="outlined primary"
-                            onclick={(_) =>
-                                update(
-                                    vnode.attrs,
-                                    random(
-                                        vnode.attrs.index,
-                                        vnode.attrs.limit - 1
-                                    )
-                                )
-                            }>
+                            aria-label="Random"
+                            onclick={(_) => {
+                                navigation.random();
+                                update(navigation);
+                            }}>
                             <i className="bi bi-dice-5-fill" />
                         </Button>
                     </div>
-                    {!edit
+                    {!navigation.edit
                         ? m(
                               "label",
                               {
-                                  onclick: (_) => (edit = !edit),
+                                  onclick: (_) => {
+                                      navigation.toogleEdit();
+                                      update(navigation);
+                                  },
                               },
-                              `${vnode.attrs.index + 1} / ${vnode.attrs.limit}`
+                              `${navigation.index + 1} / ${navigation.limit}`
                           )
                         : m(
                               "input",
                               {
                                   type: "number",
                                   min: 1,
-                                  max: vnode.attrs.limit,
+                                  max: navigation.limit,
                                   onchange: (e) => {
-                                      update(vnode.attrs, e.target.value - 1);
-                                      edit = !edit;
+                                      navigation.index = e.target.value - 1;
+                                      navigation.toogleEdit();
+                                      update(navigation);
                                   },
                               },
-                              vnode.attrs.index + 1
+                              navigation.index + 1
                           )}
                     <div>
                         <Button
                             class="outlined primary"
-                            onclick={(_) =>
-                                update(
-                                    vnode.attrs,
-                                    random(
-                                        vnode.attrs.index,
-                                        vnode.attrs.limit - 1
-                                    )
-                                )
-                            }>
+                            aria-label="Random"
+                            onclick={(_) => {
+                                navigation.random();
+                                update(navigation);
+                            }}>
                             <i className="bi bi-dice-5-fill" />
                         </Button>
                         <Button
                             class="outlined primary"
-                            onclick={(_) =>
-                                update(vnode.attrs, vnode.attrs.index + 1)
-                            }>
-                            {" "}
-                            {">"}{" "}
+                            aria-label="Next"
+                            disabled={navigation.lastDisabled()}
+                            onclick={(_) => {
+                                navigation.next();
+                                update(navigation);
+                            }}>
+                            {">"}
                         </Button>
                         <Button
                             class="outlined primary"
-                            onclick={(_) =>
-                                update(vnode.attrs, vnode.attrs.limit - 1)
-                            }>
-                            {" "}
-                            {">>"}{" "}
+                            aria-label="Last"
+                            disabled={navigation.lastDisabled()}
+                            onclick={(_) => {
+                                navigation.last();
+                                update(navigation);
+                            }}>
+                            {">>"}
                         </Button>
                     </div>
                 </div>

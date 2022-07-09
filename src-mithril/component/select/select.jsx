@@ -11,13 +11,11 @@ const Select = {
                 id={vnode.attrs.id}
                 onchange={(e) => {
                     if (typeof vnode.attrs.onchange === "function") {
-                        vnode.attrs.onchange(
-                            vnode.attrs.options[e.target.value]
-                        );
+                        vnode.attrs.onchange(e.target.value);
                     }
                 }}>
                 {vnode.attrs.options.map((option, index) => (
-                    <option key={index} value={index}>
+                    <option key={index} value={option}>
                         {option}
                     </option>
                 ))}

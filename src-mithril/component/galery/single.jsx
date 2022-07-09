@@ -3,7 +3,7 @@ import Navigation from "../navigation/navigation.jsx";
 import { convertFileSrc } from "@tauri-apps/api/tauri";
 import { rounded } from "../../utility.js";
 import "./index.scss";
-
+// TODO add test for file
 let elements = [];
 function Single(initialVnode) {
     let index = 0;

@@ -1,6 +1,5 @@
 import m from "mithril";
 import "./button.scss";
-import { isUndefined } from "../../utility";
 import Tooltip, { setupTooltip } from "../tooltip/tooltip";
 const Button = {
     oncreate(vnode) {
@@ -18,8 +17,15 @@ const Button = {
                 "button" + (vnode.attrs.disabled ? ".disabled" : ""),
                 {
                     disabled: vnode.attrs.disabled || false,
-                    onclick: vnode.attrs.onclick,
-                    class: `${isUndefined(vnode.attrs.class)}`,
+                    onclick: vnode.attrs.disabled
+                        ? undefined
+                        : vnode.attrs.onclick,
+                    class: vnode.attrs.class || "",
+                    type: vnode.attrs.type || "button",
+                    "aria-label":
+                        vnode.attrs["aria-label"] ||
+                        vnode.attrs.tooltip ||
+                        "button",
                 },
                 vnode.children
             )
