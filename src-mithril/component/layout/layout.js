@@ -26,7 +26,7 @@ const Layout = {
     view(vnode) {
         return [
             m(Navbar, {
-                label: vnode.attrs.label,
+                label: vnode.attrs.label || "Pick A gallery",
                 actions: vnode.attrs.actions || [],
             }),
             m("main", vnode.children),

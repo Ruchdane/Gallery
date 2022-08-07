@@ -4,6 +4,7 @@ import { createPopper } from "@popperjs/core";
 
 export function setupTooltip(dom, modifier) {
     const tooltip = dom.querySelector(".tooltip");
+    if (tooltip === undefined) return;
     const popperInstance = createPopper(
         dom,
         tooltip,

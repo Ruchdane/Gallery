@@ -5,7 +5,7 @@ import "./navbar.scss";
 const Navbar = {
     view(vnode) {
         return (
-            <nav class="Navvbar">
+            <nav class="navbar">
                 <div class="info">
                     <m.route.Link href="/galeries">
                         <img

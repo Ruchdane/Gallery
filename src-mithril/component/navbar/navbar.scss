@@ -1,12 +1,12 @@
-@import '../../index.scss';
+@import "../../index.scss";
 
-nav.Navvbar{
+nav.navbar {
     background-color: $primary-shade-4;
     position: fixed;
-    bottom:0;
-    width:100%;
-	z-index: $header-z-index;
-//    padding: 0.25rem;
+    bottom: 0;
+    width: 100%;
+    z-index: $header-z-index;
+    //    padding: 0.25rem;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -14,13 +14,13 @@ nav.Navvbar{
     justify-content: space-between;
 }
 
-.actions{
-    display:flex;
+.actions {
+    display: flex;
 }
 .info {
     display: flex;
     align-items: center;
     * {
-        margin-right: 10px ;
+        margin-right: 10px;
     }
 }

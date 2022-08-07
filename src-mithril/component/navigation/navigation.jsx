@@ -70,7 +70,7 @@ function Navigation(initialVnode) {
             const navigation = vnode.attrs.navigation;
             const update = vnode.attrs.update;
             return (
-                <div className="navigation">
+                <nav className="navigation">
                     <div>
                         <Button
                             class="outlined primary"
@@ -159,7 +159,7 @@ function Navigation(initialVnode) {
                             {">>"}
                         </Button>
                     </div>
-                </div>
+                </nav>
             );
         },
     };
