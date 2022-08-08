@@ -1,5 +1,5 @@
+import { Button, Tooltip } from "construct-ui";
 import m from "mithril";
-import Button from "../button/button";
 import "./navbar.scss";
 
 const Navbar = {
@@ -22,15 +22,20 @@ const Navbar = {
                     ? m(
                           ".actions",
                           vnode.attrs.actions.map((action, id) => (
-                              <Button
-                                  type="button"
-                                  key={id}
-                                  tooltip_modifier={action.tooltip_modifier}
-                                  tooltip={action.tooltip}
-                                  class="secondary"
-                                  onclick={action.perform}>
-                                  <i class={`bi bi-${action.icon}`} />
-                              </Button>
+                              <Tooltip
+                                  key={"tooltip-" + id}
+                                  content={action.tooltip}
+                                  trigger={
+                                      <Button
+                                          key={id}
+                                          type="button"
+                                          class="secondary"
+                                          aria-label={action.tooltip}
+                                          onclick={action.perform}>
+                                          <i class={`bi bi-${action.icon}`} />
+                                      </Button>
+                                  }
+                              />
                           ))
                       )
                     : null}

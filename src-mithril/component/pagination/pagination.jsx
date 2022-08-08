@@ -1,27 +1,6 @@
 import m from "mithril";
 import "./pagination.scss";
-import Select from "../select/select";
-import Button from "../button/button";
-
-const tooltipModifier = {
-    placement: "top",
-    modifiers: [
-        {
-            name: "offset",
-            options: {
-                offset: [0, 8],
-            },
-        },
-        {
-            name: "arrow",
-            options: {
-                padding: ({ popper, reference, placement }) =>
-                    popper.width / reference.width,
-            },
-        },
-    ],
-};
-
+import { Select, Button, Tooltip } from "construct-ui";
 class PaginationObject {
     /**
      *
@@ -103,18 +82,23 @@ function Pagination(initVnode) {
                 <nav aria-label="Page navigation" class="pagination">
                     <ul>
                         <li>
-                            <Button
-                                disabled={pagination.prevDisabled()}
-                                tooltip="prev"
-                                tooltip_modifier={tooltipModifier}
-                                class="outlined primary"
-                                aria-label="Previous"
-                                onclick={(_) => {
-                                    pagination.index = pagination.index - 1;
-                                    vnode.attrs.onchange(pagination);
-                                }}>
-                                <span aria-hidden="true">&laquo;</span>
-                            </Button>
+                            <Tooltip
+                                content="Previous"
+                                trigger={
+                                    <Button
+                                        id="pagination-prev"
+                                        disabled={pagination.prevDisabled()}
+                                        class="outlined primary"
+                                        aria-label="Previous"
+                                        onclick={(_) => {
+                                            pagination.index =
+                                                pagination.index - 1;
+                                            vnode.attrs.onchange(pagination);
+                                        }}>
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </Button>
+                                }
+                            />
                         </li>
                         {Array.from(new Array(pagination.count()), (_, i) => (
                             <li>
@@ -131,25 +115,29 @@ function Pagination(initVnode) {
                             </li>
                         ))}
                         <li>
-                            <Button
-                                disabled={pagination.nextDisabled()}
-                                tooltip="next"
-                                tooltip_modifier={tooltipModifier}
-                                class="outlined primary"
-                                aria-label="Next"
-                                onclick={(_) => {
-                                    pagination.index = pagination.index + 1;
-                                    vnode.attrs.onchange(pagination);
-                                }}>
-                                <span aria-hidden="true">&raquo;</span>
-                            </Button>
+                            <Tooltip
+                                content="pagination-next"
+                                trigger={
+                                    <Button
+                                        disabled={pagination.nextDisabled()}
+                                        class="outlined primary"
+                                        aria-label="Next"
+                                        onclick={(_) => {
+                                            pagination.index =
+                                                pagination.index + 1;
+                                            vnode.attrs.onchange(pagination);
+                                        }}>
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </Button>
+                                }></Tooltip>
                         </li>
                     </ul>
                     <div>
+                        {/*  TODO add custom value */}
                         <Select
                             options={PaginationObject.limits}
-                            onchange={(value) => {
-                                pagination.limit = value;
+                            onchange={(e) => {
+                                pagination.limit = e.currentTarget.value;
                                 vnode.attrs.onchange(pagination);
                             }}
                         />

@@ -11,8 +11,9 @@
         "watch": "npx onchange '**/*' -- npx prettier --write --ignore-unknown {{changed}}",
         "format": "prettier '**/*.{js,jsx}' --write",
         "lint": "eslint '**/*.{js,jsx}' --fix",
-        "test:unit": "cd src-mithril/component && vitest",
-        "test:view": "cd src-mithril/view && vitest"
+        "test": "npm-run-all test:*",
+        "test:unit": "npx vitest -r src-mithril/component",
+        "test:view": "npx vitest -r src-mithril/view"
     },
     "devDependencies": {
         "@faker-js/faker": "^7.3.0",
@@ -27,6 +28,7 @@
         "eslint-plugin-react": "^7.30.1",
         "jsdom": "^20.0.0",
         "mithril-query": "^4.0.1",
+        "npm-run-all": "^4.1.5",
         "prettier": "2.7.1",
         "sass": "^1.53.0",
         "vite": "^2.9.9",

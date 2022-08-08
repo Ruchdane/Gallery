@@ -31,9 +31,11 @@ export default defineConfig({
     sourcemap: !!process.env.TAURI_DEBUG,
   },
   test: {
+    // include: ['./src-mithril/*/__tests__/*.spec.js'],
     globals: true,
     environment: 'jsdom',
     root:"src-mithril",
+    setupFiles: ['__tests__/setup.ts'],
     transformMode: {
       web: [/.[tj]sx$/],
     }

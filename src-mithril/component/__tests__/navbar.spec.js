@@ -8,7 +8,7 @@ describe("Navabar props", () => {
         const out = mq(Navbar);
         expect(out.find("button").length).toBe(0);
     });
-    it.skip("Actions", () => {
+    it("Actions", () => {
         let var1 = 0;
         let var2 = 0;
         function action1() {
@@ -26,7 +26,7 @@ describe("Navabar props", () => {
                 },
                 {
                     icon: "g",
-                    perfom: action2,
+                    perform: action2,
                     tooltip: "Increment var2",
                 },
             ],

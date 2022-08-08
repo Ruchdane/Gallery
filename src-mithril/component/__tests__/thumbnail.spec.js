@@ -5,21 +5,27 @@ import Thumbnail from "../thumbnail";
 import { convertFileSrc } from "@tauri-apps/api/tauri";
 describe("Thumbnail props", () => {
     it("Thumbnail name is correct", () => {
+        const name = "Kono dio da"
         const out = mq(Thumbnail, {
-            name: "Kono dio da",
+            galery: {
+                name,
+            }
         });
-        expect(out.contains("Kono dio da")).toBe(true);
+        expect(out.contains(name)).toBe(true);
     });
     it("Thumbnail size is correct", () => {
+        const size = "9001";
         const out = mq(Thumbnail, {
-            size: "9001",
+            galery: {
+                size,
+            }
         });
-        expect(out.contains("9001")).toBe(true);
+        expect(out.contains(size)).toBe(true);
     });
     it("Thumbnail image is correct", () => {
-        const src = "http://lorem.picsum.com/wall/400/600";
-        const out = mq(Thumbnail, { thumbnail: src });
+        const thumbnail = "http://lorem.picsum.com/wall/400/600";
+        const out = mq(Thumbnail, { galery: { thumbnail } });
         const img = out.first("img");
-        expect(img.src).toBe(convertFileSrc(src));
+        expect(img.src).toBe(convertFileSrc(thumbnail));
     });
 });

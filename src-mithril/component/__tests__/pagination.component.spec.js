@@ -57,7 +57,7 @@ describe("Pagination component", () => {
             pagination,
             onchange: (value) => (pagination = value),
         });
-        out.click("button[aria-label='Previous']");
+        out.click("button#pagination-prev");
         expect(pagination.index).toBe(0);
     });
 });

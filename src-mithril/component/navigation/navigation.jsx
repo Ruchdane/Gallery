@@ -1,26 +1,7 @@
 import m from "mithril";
-import Button from "../button/button.js";
 import { random, rounded } from "../../utility.js";
 import "./navigation.scss";
-// Tooltip bug
-// eslint-disable-next-line no-unused-vars
-const tooltipModifier = {
-    modifiers: [
-        {
-            name: "offset",
-            options: {
-                offset: [0, 8],
-            },
-        },
-        {
-            name: "arrow",
-            options: {
-                padding: ({ popper, reference, placement }) =>
-                    popper.width / reference.width,
-            },
-        },
-    ],
-};
+import { Button, Tooltip } from "construct-ui";
 
 export function NavigationObject(index, limit, edit = false) {
     return {
@@ -72,37 +53,54 @@ function Navigation(initialVnode) {
             return (
                 <nav className="navigation">
                     <div>
-                        <Button
-                            class="outlined primary"
-                            // FIXME Tooltip bug on navigation
-                            aria-label="First"
-                            disabled={navigation.firstDisabled()}
-                            onclick={(_) => {
-                                navigation.first();
-                                update(navigation);
-                            }}>
-                            {"<<"}
-                        </Button>
-                        <Button
-                            class="outlined primary"
-                            aria-label="Previous"
-                            disabled={navigation.firstDisabled()}
-                            onclick={(_) => {
-                                navigation.prev();
-                                update(navigation);
-                            }}>
-                            {"<"}
-                        </Button>
-                        <Button
-                            class="outlined primary"
-                            aria-label="Random"
-                            onclick={(_) => {
-                                navigation.random();
-                                update(navigation);
-                            }}>
-                            <i className="bi bi-dice-5-fill" />
-                        </Button>
+                        <Tooltip
+                            content="First"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="First"
+                                    disabled={navigation.firstDisabled()}
+                                    onclick={(_) => {
+                                        navigation.first();
+                                        update(navigation);
+                                    }}>
+                                    {"<<"}
+                                </Button>
+                            }
+                        />
+
+                        <Tooltip
+                            content="Previous"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="Previous"
+                                    disabled={navigation.firstDisabled()}
+                                    onclick={(_) => {
+                                        navigation.prev();
+                                        update(navigation);
+                                    }}>
+                                    {"<"}
+                                </Button>
+                            }
+                        />
+
+                        <Tooltip
+                            content="Random"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="Random"
+                                    onclick={(_) => {
+                                        navigation.random();
+                                        update(navigation);
+                                    }}>
+                                    <i className="bi bi-dice-5-fill" />
+                                </Button>
+                            }
+                        />
                     </div>
+
                     {!navigation.edit
                         ? m(
                               "label",
@@ -129,35 +127,51 @@ function Navigation(initialVnode) {
                               navigation.index + 1
                           )}
                     <div>
-                        <Button
-                            class="outlined primary"
-                            aria-label="Random"
-                            onclick={(_) => {
-                                navigation.random();
-                                update(navigation);
-                            }}>
-                            <i className="bi bi-dice-5-fill" />
-                        </Button>
-                        <Button
-                            class="outlined primary"
-                            aria-label="Next"
-                            disabled={navigation.lastDisabled()}
-                            onclick={(_) => {
-                                navigation.next();
-                                update(navigation);
-                            }}>
-                            {">"}
-                        </Button>
-                        <Button
-                            class="outlined primary"
-                            aria-label="Last"
-                            disabled={navigation.lastDisabled()}
-                            onclick={(_) => {
-                                navigation.last();
-                                update(navigation);
-                            }}>
-                            {">>"}
-                        </Button>
+                        <Tooltip
+                            content="Random"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="Random"
+                                    onclick={(_) => {
+                                        navigation.random();
+                                        update(navigation);
+                                    }}>
+                                    <i className="bi bi-dice-5-fill" />
+                                </Button>
+                            }
+                        />
+                        <Tooltip
+                            content="Next"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="Next"
+                                    disabled={navigation.lastDisabled()}
+                                    onclick={(_) => {
+                                        navigation.next();
+                                        update(navigation);
+                                    }}>
+                                    {">"}
+                                </Button>
+                            }
+                        />
+
+                        <Tooltip
+                            content="Last"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="Last"
+                                    disabled={navigation.lastDisabled()}
+                                    onclick={(_) => {
+                                        navigation.last();
+                                        update(navigation);
+                                    }}>
+                                    {">>"}
+                                </Button>
+                            }
+                        />
                     </div>
                 </nav>
             );
