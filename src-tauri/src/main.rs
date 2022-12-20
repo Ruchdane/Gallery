@@ -8,19 +8,18 @@ use std::sync::Mutex;
 use setting::{Setting, SettingState};
 use tauri::Manager;
 
-
+mod db;
 mod error;
 mod galery;
 mod setting;
-mod db;
 fn main() {
     tauri::Builder::default()
-    .setup(|app| {
-      let handle = app.handle();
-      let setting = Setting::get(&handle);
-      app.manage(SettingState(Mutex::new(setting)));
-      Ok(())
-    })
+        .setup(|app| {
+            let handle = app.handle();
+            let setting = Setting::get(&handle);
+            app.manage(SettingState(Mutex::new(setting)));
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             setting::get_user_settings,
             setting::change_root,
