@@ -1,18 +1,14 @@
-#[macro_export]
-macro_rules! unwrap_or_return {
-    ( $e:expr,$d:expr ) => {
-        match $e {
-            Ok(x) => x,
-            Err(_) => return $d,
-        }
-    };
+use crate::galery::GaleryError;
+
+#[derive(Debug, thiserror::Error, serde::Serialize)]
+pub enum Error {
+    #[error(transparent)]
+    Galery(#[from] GaleryError),
+    #[error("Unknown error")]
+    Other(String),
 }
-macro_rules! unwrap_or_return_to_string {
-    ( $e:expr ) => {
-        match $e {
-            Ok(x) => x,
-            Err(err) => return Err(err.to_string()),
-        }
-    };
+impl From<std::io::Error> for Error {
+    fn from(value: std::io::Error) -> Self {
+        Error::Other(value.to_string())
+    }
 }
-pub(crate) use unwrap_or_return_to_string;

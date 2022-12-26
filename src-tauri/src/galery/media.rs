@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::{io, path::Path};
+use std::path::Path;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Media {
@@ -8,9 +8,9 @@ pub struct Media {
 }
 
 impl Media {
-    pub fn new(path: &Path) -> io::Result<Self> {
+    pub fn new(path: &Path) -> Self {
         let src = path.to_string_lossy().to_string();
         let r#type = "image".to_string();
-        Ok(Self { src, r#type })
+        Self { src, r#type }
     }
 }

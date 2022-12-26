@@ -3,6 +3,7 @@
     windows_subsystem = "windows"
 )]
 
+// use crate::prelude::*;
 use std::sync::Mutex;
 
 use setting::{Setting, SettingState};
@@ -11,6 +12,7 @@ use tauri::Manager;
 mod db;
 mod error;
 mod galery;
+mod prelude;
 mod setting;
 fn main() {
     tauri::Builder::default()
