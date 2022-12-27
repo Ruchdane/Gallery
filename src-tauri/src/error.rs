@@ -1,14 +1,13 @@
-use crate::galery::GaleryError;
-
-#[derive(Debug, thiserror::Error, serde::Serialize)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
-    #[error(transparent)]
-    Galery(#[from] GaleryError),
+    #[error("Io error")]
+    Io(#[from] std::io::Error),
+
     #[error("Unknown error")]
     Other(String),
 }
-impl From<std::io::Error> for Error {
-    fn from(value: std::io::Error) -> Self {
-        Error::Other(value.to_string())
+impl From<Error> for String {
+    fn from(value: Error) -> Self {
+        value.to_string()
     }
 }
