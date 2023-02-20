@@ -3,7 +3,7 @@ use crate::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Eq, PartialEq)]
 pub struct Galery {
     name: String,
     path: String,
@@ -11,6 +11,17 @@ pub struct Galery {
     thumbnail: String,
 }
 
+impl Ord for Galery {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.path.cmp(&other.path)
+    }
+}
+
+impl PartialOrd for Galery {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.path.cmp(&other.path))
+    }
+}
 impl Galery {
     fn get_galery_size(path: &Path) -> Result<u16> {
         let mut size: u16 = 0;
@@ -46,6 +57,7 @@ impl Galery {
                 medias.push(media)
             }
         }
+        medias.sort();
         Ok(medias)
     }
     pub fn new(galery_path: &Path) -> Result<Galery> {
