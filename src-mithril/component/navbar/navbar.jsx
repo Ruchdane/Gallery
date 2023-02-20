@@ -9,7 +9,7 @@ const Navbar = {
                 <div class="info">
                     <m.route.Link href="/galeries">
                         <img
-                            src="favicon.svg"
+                            src="/favicon.svg"
                             width="38"
                             height="30"
                             alt="Galery"
