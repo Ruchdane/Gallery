@@ -1,2 +1,2 @@
 # Galery app
-Explorateur d'image permettant de lire des scans
+Blazing fast manga reader writen in rust using tauri and mithriljs
