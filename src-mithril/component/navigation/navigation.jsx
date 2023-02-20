@@ -64,7 +64,8 @@ function Navigation(initialVnode) {
                                     onclick={(_) => {
                                         navigation.first();
                                         update(navigation);
-                                    }}/>
+                                    }}
+                                />
                             }
                         />
 
@@ -79,8 +80,7 @@ function Navigation(initialVnode) {
                                     onclick={(_) => {
                                         navigation.prev();
                                         update(navigation);
-                                    }}>
-                                </Button>
+                                    }}></Button>
                             }
                         />
 
@@ -94,7 +94,8 @@ function Navigation(initialVnode) {
                                     onclick={(_) => {
                                         navigation.random();
                                         update(navigation);
-                                    }}/>
+                                    }}
+                                />
                             }
                         />
                     </div>
@@ -135,7 +136,8 @@ function Navigation(initialVnode) {
                                     onclick={(_) => {
                                         navigation.random();
                                         update(navigation);
-                                    }}/>
+                                    }}
+                                />
                             }
                         />
                         <Tooltip
@@ -149,8 +151,9 @@ function Navigation(initialVnode) {
                                     onclick={(_) => {
                                         navigation.next();
                                         update(navigation);
-                                    }}/>
-                                }
+                                    }}
+                                />
+                            }
                         />
 
                         <Tooltip
@@ -164,7 +167,8 @@ function Navigation(initialVnode) {
                                     onclick={(_) => {
                                         navigation.last();
                                         update(navigation);
-                                    }}/>
+                                    }}
+                                />
                             }
                         />
                     </div>

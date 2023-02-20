@@ -95,12 +95,13 @@ function Pagination(initVnode) {
                                             pagination.index =
                                                 pagination.index - 1;
                                             vnode.attrs.onchange(pagination);
-                                        }}/>
+                                        }}
+                                    />
                                 }
                             />
                         </li>
                         {Array.from(new Array(pagination.count()), (_, i) => (
-                            <li>
+                            <li key={i}>
                                 <Button
                                     label={i + 1}
                                     class={`${
@@ -109,7 +110,8 @@ function Pagination(initVnode) {
                                     onclick={(_) => {
                                         pagination.index = i;
                                         vnode.attrs.onchange(pagination);
-                                    }}/>
+                                    }}
+                                />
                             </li>
                         ))}
                         <li>
@@ -125,7 +127,8 @@ function Pagination(initVnode) {
                                             pagination.index =
                                                 pagination.index + 1;
                                             vnode.attrs.onchange(pagination);
-                                        }}/>
+                                        }}
+                                    />
                                 }></Tooltip>
                         </li>
                     </ul>

@@ -30,9 +30,14 @@ const Navbar = {
                                           key={id}
                                           type="button"
                                           class="secondary"
-                                          label={<i class={`bi bi-${action.icon}`} />}
+                                          label={
+                                              <i
+                                                  class={`bi bi-${action.icon}`}
+                                              />
+                                          }
                                           aria-label={action.tooltip}
-                                          onclick={action.perform}/>
+                                          onclick={action.perform}
+                                      />
                                   }
                               />
                           ))

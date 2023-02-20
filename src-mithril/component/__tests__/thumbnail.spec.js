@@ -5,11 +5,11 @@ import Thumbnail from "../thumbnail";
 import { convertFileSrc } from "@tauri-apps/api/tauri";
 describe("Thumbnail props", () => {
     it("Thumbnail name is correct", () => {
-        const name = "Kono dio da"
+        const name = "Kono dio da";
         const out = mq(Thumbnail, {
             galery: {
                 name,
-            }
+            },
         });
         expect(out.contains(name)).toBe(true);
     });
@@ -18,7 +18,7 @@ describe("Thumbnail props", () => {
         const out = mq(Thumbnail, {
             galery: {
                 size,
-            }
+            },
         });
         expect(out.contains(size)).toBe(true);
     });
