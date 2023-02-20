@@ -11,7 +11,7 @@ import "./galery.scss";
 const model = {
     galery: undefined,
     name: "",
-    elements: [{ src: "" }],
+    elements: [],
     show_all: false,
     s_witch() {
         this.show_all = !this.show_all;
@@ -71,7 +71,8 @@ function Galery(initialVnode) {
                                   elements: model.elements,
                               })
                             : m(Single, {
-                                  elements: model.elements,
+                                  index: 0,
+                                  medias: model.elements,
                               })
                         : m("", "Loading")}
                 </Layout>
