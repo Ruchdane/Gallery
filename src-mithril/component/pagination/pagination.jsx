@@ -89,7 +89,7 @@ function Pagination(initVnode) {
                             </Button>
                         </li>
                         {Array.from(new Array(pagination.count()), (_, i) => (
-                            <li>
+                            <li key={i}>
                                 <Button
                                     class={`${pagination.isCurrent(
                                         i
