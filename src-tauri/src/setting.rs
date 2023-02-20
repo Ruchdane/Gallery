@@ -14,7 +14,7 @@ pub struct Setting {
 
 impl Setting {
     pub fn get(app_handle: &AppHandle) -> Self {
-        let mut app_dir = match app_handle.path_resolver().app_dir() {
+        let mut app_dir = match app_handle.path_resolver().app_config_dir() {
             Some(dir) => dir,
             None => {
                 println!("App dir not found");
@@ -78,8 +78,9 @@ pub fn change_root(state: State<SettingState>, new_root: String) -> Result<(), S
     Ok(())
 }
 
+#[allow(dead_code)]
 pub fn show_config(app_handle: &AppHandle) {
-    let app_dir = match app_handle.path_resolver().app_dir() {
+    let app_dir = match app_handle.path_resolver().app_config_dir() {
         Some(dir) => dir,
         None => {
             println!("App dir not found");
