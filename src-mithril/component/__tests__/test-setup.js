@@ -1,9 +1,9 @@
-import { after } from "ospec";
-import { JSDOM } from "jsdom";
+import o from "ospec";
+import jsdom from "jsdom";
 
-// Require Mithril.js to make sure it loads properly.
+// Requiare Mithril.js to make sure it loads properly.
 import "mithril";
-const dom = new JSDOM("", {
+const dom = new jsdom.JSDOM("", {
     // So we can get `requestAnimationFrame`
     pretendToBeVisual: true,
 });
@@ -15,6 +15,6 @@ global.document = dom.window.document;
 global.requestAnimationFrame = dom.window.requestAnimationFrame;
 
 // And now, make sure JSDOM ends when the tests end.
-after(function () {
+o.after(function () {
     dom.window.close();
 });

@@ -1,5 +1,5 @@
 import m from "mithril";
-import Navbar from "../header/header";
+import Navbar from "../navbar/navbar";
 import "./layout.scss";
 export function layoutTooltipModifier() {
     return {
@@ -26,7 +26,7 @@ const Layout = {
     view(vnode) {
         return [
             m(Navbar, {
-                label: vnode.attrs.label,
+                label: vnode.attrs.label || "Pick A gallery",
                 actions: vnode.attrs.actions || [],
             }),
             m("main", vnode.children),

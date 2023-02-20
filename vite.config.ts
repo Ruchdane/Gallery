@@ -26,8 +26,18 @@ export default defineConfig({
     // Tauri supports es2021
     target: ['es2021', 'chrome97', 'safari13'],
     // don't minify for debug builds
-    minify: !process.env.TAURI_DEBUG && 'esbuild',
+    minify: process.env.TAURI_DEBUG ? false :'esbuild',
     // produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
   },
+  test: {
+    // include: ['./src-mithril/*/__tests__/*.spec.js'],
+    globals: true,
+    environment: 'jsdom',
+    root:"src-mithril",
+    setupFiles: ['__tests__/setup.ts'],
+    transformMode: {
+      web: [/.[tj]sx$/],
+    }
+  }
 })
