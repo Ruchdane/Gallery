@@ -59,13 +59,12 @@ function Navigation(initialVnode) {
                                 <Button
                                     class="outlined primary"
                                     aria-label="First"
+                                    label="<<"
                                     disabled={navigation.firstDisabled()}
                                     onclick={(_) => {
                                         navigation.first();
                                         update(navigation);
-                                    }}>
-                                    {"<<"}
-                                </Button>
+                                    }}/>
                             }
                         />
 
@@ -74,13 +73,13 @@ function Navigation(initialVnode) {
                             trigger={
                                 <Button
                                     class="outlined primary"
+                                    label="<"
                                     aria-label="Previous"
                                     disabled={navigation.firstDisabled()}
                                     onclick={(_) => {
                                         navigation.prev();
                                         update(navigation);
                                     }}>
-                                    {"<"}
                                 </Button>
                             }
                         />
@@ -90,13 +89,12 @@ function Navigation(initialVnode) {
                             trigger={
                                 <Button
                                     class="outlined primary"
+                                    label={m("i.bi.bi-dice-5-fill")}
                                     aria-label="Random"
                                     onclick={(_) => {
                                         navigation.random();
                                         update(navigation);
-                                    }}>
-                                    <i className="bi bi-dice-5-fill" />
-                                </Button>
+                                    }}/>
                             }
                         />
                     </div>
@@ -132,13 +130,12 @@ function Navigation(initialVnode) {
                             trigger={
                                 <Button
                                     class="outlined primary"
+                                    label={m("i.bi.bi-dice-5-fill")}
                                     aria-label="Random"
                                     onclick={(_) => {
                                         navigation.random();
                                         update(navigation);
-                                    }}>
-                                    <i className="bi bi-dice-5-fill" />
-                                </Button>
+                                    }}/>
                             }
                         />
                         <Tooltip
@@ -146,15 +143,14 @@ function Navigation(initialVnode) {
                             trigger={
                                 <Button
                                     class="outlined primary"
+                                    label=">"
                                     aria-label="Next"
                                     disabled={navigation.lastDisabled()}
                                     onclick={(_) => {
                                         navigation.next();
                                         update(navigation);
-                                    }}>
-                                    {">"}
-                                </Button>
-                            }
+                                    }}/>
+                                }
                         />
 
                         <Tooltip
@@ -162,14 +158,13 @@ function Navigation(initialVnode) {
                             trigger={
                                 <Button
                                     class="outlined primary"
+                                    label=">>"
                                     aria-label="Last"
                                     disabled={navigation.lastDisabled()}
                                     onclick={(_) => {
                                         navigation.last();
                                         update(navigation);
-                                    }}>
-                                    {">>"}
-                                </Button>
+                                    }}/>
                             }
                         />
                     </div>

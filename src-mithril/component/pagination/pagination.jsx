@@ -89,29 +89,27 @@ function Pagination(initVnode) {
                                         id="pagination-prev"
                                         disabled={pagination.prevDisabled()}
                                         class="outlined primary"
+                                        label="<"
                                         aria-label="Previous"
                                         onclick={(_) => {
                                             pagination.index =
                                                 pagination.index - 1;
                                             vnode.attrs.onchange(pagination);
-                                        }}>
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </Button>
+                                        }}/>
                                 }
                             />
                         </li>
                         {Array.from(new Array(pagination.count()), (_, i) => (
                             <li>
                                 <Button
+                                    label={i + 1}
                                     class={`${
                                         pagination.isCurrent(i) ? "active" : ""
                                     } outlined primary`}
                                     onclick={(_) => {
                                         pagination.index = i;
                                         vnode.attrs.onchange(pagination);
-                                    }}>
-                                    {i + 1}
-                                </Button>
+                                    }}/>
                             </li>
                         ))}
                         <li>
@@ -121,14 +119,13 @@ function Pagination(initVnode) {
                                     <Button
                                         disabled={pagination.nextDisabled()}
                                         class="outlined primary"
+                                        label=">"
                                         aria-label="Next"
                                         onclick={(_) => {
                                             pagination.index =
                                                 pagination.index + 1;
                                             vnode.attrs.onchange(pagination);
-                                        }}>
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </Button>
+                                        }}/>
                                 }></Tooltip>
                         </li>
                     </ul>
