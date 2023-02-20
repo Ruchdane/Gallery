@@ -1,18 +1,13 @@
-#[macro_export]
-macro_rules! unwrap_or_return {
-    ( $e:expr,$d:expr ) => {
-        match $e {
-            Ok(x) => x,
-            Err(_) => return $d,
-        }
-    };
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error("Io error")]
+    Io(#[from] std::io::Error),
+
+    #[error("Unknown error")]
+    Other(String),
 }
-macro_rules! unwrap_or_return_to_string {
-    ( $e:expr ) => {
-        match $e {
-            Ok(x) => x,
-            Err(err) => return Err(err.to_string()),
-        }
-    };
+impl From<Error> for String {
+    fn from(value: Error) -> Self {
+        value.to_string()
+    }
 }
-pub(crate) use unwrap_or_return_to_string;

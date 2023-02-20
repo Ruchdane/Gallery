@@ -1,9 +1,9 @@
-@import '../../index.scss';
+@import "../../index.scss";
 
 .title {
     text-align: center;
     font-size: 2.5rem;
-    margin:10px;
+    margin: 10px;
     font-weight: 700;
 }
 .filter {
@@ -23,38 +23,17 @@
 }
 
 .grid {
+    list-style: none;
+
     display: flex;
-	flex-wrap: wrap;
-    gap: 10px;
-    margin: 10px 30px;
-	padding: 10px;
-	justify-content: flex-start;
+    flex-wrap: wrap;
+    
+    gap: 2rem;
+    margin: 2rem;
+    
     .row {
         max-width: 200px;
-        height: 250px;
-		margin-bottom:2rem;
-        @include responsive($xl) {
-            flex: 1 1 auto;
-        }
-
-        @include responsive($lg) {
-            flex: 1 1 auto;
-        }
-
-        @include responsive($md) {
-            flex: 1 1 auto;
-        }
-
-        @include responsive($sm) {
-            flex: 1 1 auto;
-            width: 25%;
-        }
-
-        @include responsive($xs) {
-            flex: 1 1 auto;
-            width: 50%;
-        }
-
+        height: 300px;
+        margin-bottom: 2rem;
     }
 }
-

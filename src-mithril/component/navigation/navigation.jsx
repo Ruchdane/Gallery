@@ -1,71 +1,180 @@
-import m from 'mithril'
-import Button from '../button/button.js'
-import {random,rounded} from '../../utility.js'
-import './navigation.scss'
-const tooltip_modifier = {
-	modifiers: [
-	  {
-		name: 'offset',
-		options: {
-		  offset: [0, 8],
-		},
-	  },
-	  {
-		name: 'arrow',
-		options: {
-		  padding: ({ popper, reference, placement }) =>
-			popper.width / reference.width,
-		},
-	  }
-	],
-  }
-  
-function Navigation(initialVnode){
-	function update(attrs,value){
-		attrs.onchange(rounded(value,attrs.limit))
-	}
-	var edit = false
-	return {
-		view(vnode){
-			return <div class="navigation">
-					<div>
-						<Button class="outlined primary" 
-						//FIXME Tooltip bug on nnavigation
+import m from "mithril";
+import { random, rounded } from "../../utility.js";
+import "./navigation.scss";
+import { Button, Tooltip } from "construct-ui";
 
-				onclick={ _=> update(vnode.attrs,0) } > {"<<"} </Button>
-						<Button class="outlined primary" 
-				onclick={ _=> update(vnode.attrs,vnode.attrs.index-1) }> {"<"} </Button>	
-						<Button class="outlined primary" 
-				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
-							<i class="bi bi-dice-5-fill"/>
-						</Button>
-					</div>
-					{!edit 
-						? m('label',{
-							onclick: _ => edit=!edit
-						},`${vnode.attrs.index + 1} / ${vnode.attrs.limit}`)
-						: m('input',{
-							type:"number",
-							min:1,
-							max:vnode.attrs.limit,
-							onchange:(e)=> {
-								update(vnode.attrs,e.target.value -1 )
-								edit=!edit}
-						},vnode.attrs.index+1)
-					}
-					<div>
-						<Button class="outlined primary" 
-				onclick={ _=> update(vnode.attrs,random(vnode.attrs.index,vnode.attrs.limit-1)) }>  
-							<i class="bi bi-dice-5-fill"/>
-						</Button>
-						<Button class="outlined primary" 
-				onclick={ _=> update(vnode.attrs,vnode.attrs.index + 1) }> {">"}  </Button>	
-						<Button class="outlined primary" 
-				onclick={ _=> update(vnode.attrs,vnode.attrs.limit - 1) }> {">>"} </Button>
-					</div>
-				
-				</div>
-		}
-	}
+export function NavigationObject(index, limit, edit = false) {
+    return {
+        index,
+        limit,
+        edit,
+        first() {
+            this.index = 0;
+        },
+
+        firstDisabled() {
+            return this.index === 0;
+        },
+
+        next() {
+            this.index = rounded(this.index + 1, this.limit);
+        },
+
+        random() {
+            random(0, this.limit - 1);
+        },
+
+        toogleEdit() {
+            this.edit = !this.edit;
+        },
+
+        prev() {
+            this.index = rounded(this.index - 1, this.limit);
+        },
+
+        lastDisabled() {
+            return this.index === this.limit - 1;
+        },
+
+        last() {
+            this.index = this.limit - 1;
+        },
+    };
+}
+
+function Navigation(initialVnode) {
+    return {
+        view(vnode) {
+            /**
+             * @type NavigationObject
+             */
+            const navigation = vnode.attrs.navigation;
+            const update = vnode.attrs.update;
+            return (
+                <nav className="navigation">
+                    <div>
+                        <Tooltip
+                            content="First"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    aria-label="First"
+                                    label="<<"
+                                    disabled={navigation.firstDisabled()}
+                                    onclick={(_) => {
+                                        navigation.first();
+                                        update(navigation);
+                                    }}
+                                />
+                            }
+                        />
+
+                        <Tooltip
+                            content="Previous"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    label="<"
+                                    aria-label="Previous"
+                                    disabled={navigation.firstDisabled()}
+                                    onclick={(_) => {
+                                        navigation.prev();
+                                        update(navigation);
+                                    }}></Button>
+                            }
+                        />
+
+                        <Tooltip
+                            content="Random"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    label={m("i.bi.bi-dice-5-fill")}
+                                    aria-label="Random"
+                                    onclick={(_) => {
+                                        navigation.random();
+                                        update(navigation);
+                                    }}
+                                />
+                            }
+                        />
+                    </div>
+
+                    {!navigation.edit
+                        ? m(
+                              "label",
+                              {
+                                  onclick: (_) => {
+                                      navigation.toogleEdit();
+                                      update(navigation);
+                                  },
+                              },
+                              `${navigation.index + 1} / ${navigation.limit}`
+                          )
+                        : m(
+                              "input",
+                              {
+                                  type: "number",
+                                  min: 1,
+                                  max: navigation.limit,
+                                  onchange: (e) => {
+                                      navigation.index = e.target.value - 1;
+                                      navigation.toogleEdit();
+                                      update(navigation);
+                                  },
+                              },
+                              navigation.index + 1
+                          )}
+                    <div>
+                        <Tooltip
+                            content="Random"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    label={m("i.bi.bi-dice-5-fill")}
+                                    aria-label="Random"
+                                    onclick={(_) => {
+                                        navigation.random();
+                                        update(navigation);
+                                    }}
+                                />
+                            }
+                        />
+                        <Tooltip
+                            content="Next"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    label=">"
+                                    aria-label="Next"
+                                    disabled={navigation.lastDisabled()}
+                                    onclick={(_) => {
+                                        navigation.next();
+                                        update(navigation);
+                                    }}
+                                />
+                            }
+                        />
+
+                        <Tooltip
+                            content="Last"
+                            trigger={
+                                <Button
+                                    class="outlined primary"
+                                    label=">>"
+                                    aria-label="Last"
+                                    disabled={navigation.lastDisabled()}
+                                    onclick={(_) => {
+                                        navigation.last();
+                                        update(navigation);
+                                    }}
+                                />
+                            }
+                        />
+                    </div>
+                </nav>
+            );
+        },
+    };
 }
 export default Navigation;

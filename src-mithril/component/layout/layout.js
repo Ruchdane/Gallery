@@ -1,36 +1,37 @@
-import m from 'mithril'
-import Navbar from '../header/header';
-import './layout.scss'
-export function layout_tooltip_modifier(){
-	return {
-            modifiers: [
-              {
-                name: 'offset',
+import m from "mithril";
+import Navbar from "../navbar/navbar";
+import "./layout.scss";
+export function layoutTooltipModifier() {
+    return {
+        modifiers: [
+            {
+                name: "offset",
                 options: {
-                  offset: [0, 8],
+                    offset: [0, 8],
                 },
-              },
-              {
-                name: 'arrow',
+            },
+            {
+                name: "arrow",
                 options: {
-                  padding: ({ popper, reference, placement }) =>
-                    popper.width / reference.width,
+                    padding: ({ popper, reference, placement }) =>
+                        popper.width / reference.width,
                 },
-              }
-            ],
-          }
+            },
+        ],
+    };
 }
-var layout_collapsed = false
+// const isLayoutCollapsed = false
 
 const Layout = {
-	view(vnode) {
-		return [
-				m(Navbar,{
-          label: vnode.attrs.label,
-					actions: vnode.attrs.actions  || [] }),
-					m('main',vnode.children)
-		]
-	}
+    view(vnode) {
+        return [
+            m(Navbar, {
+                label: vnode.attrs.label || "Pick A gallery",
+                actions: vnode.attrs.actions || [],
+            }),
+            m("main", vnode.children),
+        ];
+    },
 };
 
 export default Layout;
