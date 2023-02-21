@@ -1,7 +1,7 @@
 [package]
 name = "galery"
-version = "0.1.0"
-description = "Manga reading app"
+version = "0.0.1"
+description = "Gallery manga reding app"
 authors = ["ruchdane"]
 license = ""
 repository = ""
