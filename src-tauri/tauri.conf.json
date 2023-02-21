@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "galery",
-    "version": "0.1.0"
+    "version": "0.0.1"
   },
   
   "tauri": {
@@ -16,11 +16,11 @@
      "protocol": {
         "asset": true,
         "all": true,
-        "assetScope": ["*"]
+        "assetScope": []
       },
       "dialog": {
         "message": true,
-	"open":true
+      	"open":true
       }
     },
     "bundle": {
