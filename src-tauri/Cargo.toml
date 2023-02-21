@@ -2,7 +2,7 @@
 name = "galery"
 version = "0.0.1"
 description = "Gallery manga reding app"
-authors = ["you"]
+authors = ["ruchdane"]
 license = ""
 repository = ""
 default-run = "galery"
