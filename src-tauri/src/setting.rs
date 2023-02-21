@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
-use std::fs::create_dir;
 use std::sync::Mutex;
+use std::{fs::create_dir, path::PathBuf};
+use tauri::Manager;
 use tauri::{api::path::picture_dir, AppHandle, State};
 
 pub struct SettingState(pub Mutex<Setting>);
@@ -43,6 +44,10 @@ impl Setting {
     pub fn path(&self) -> &str {
         self.path.as_ref()
     }
+
+    pub(crate) fn allowed_directory(&self) -> std::path::PathBuf {
+        PathBuf::from(self.path.clone())
+    }
 }
 
 /// `Setting` implements `Default`
@@ -69,10 +74,18 @@ pub fn get_user_settings(state: State<SettingState>) -> Result<Setting, String> 
 //FIXME coonfiguration save sometime corrupt the file
 //change configuration system or ...
 #[tauri::command]
-pub fn change_root(state: State<SettingState>, new_root: String) -> Result<(), String> {
+pub fn change_root(
+    handle: tauri::AppHandle,
+    state: State<SettingState>,
+    new_root: String,
+) -> Result<(), String> {
     let mut setting = state.0.lock().unwrap();
     setting.path = new_root;
     let setting_path = setting.setting_path.as_str();
+    handle
+        .asset_protocol_scope()
+        .allow_directory(setting.allowed_directory(), true)
+        .unwrap();
     // TODO Handle erro
     confy::store_path(setting_path, setting.clone()).unwrap();
     Ok(())
