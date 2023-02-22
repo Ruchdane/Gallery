@@ -22,9 +22,6 @@ fn main() {
             app.asset_protocol_scope()
                 .allow_directory(setting.allowed_directory(), true)?;
             // .allow_file(setting.allowed_directory())?;
-            for pattern in app.asset_protocol_scope().allowed_patterns() {
-                println!("{}", pattern)
-            }
             app.manage(SettingState(Mutex::new(setting)));
             app.manage(app.asset_protocol_scope());
             Ok(())
