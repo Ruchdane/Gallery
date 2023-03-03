@@ -11,8 +11,11 @@ use tauri::Manager;
 
 mod db;
 mod error;
+mod folder;
 mod galery;
+mod manga;
 mod prelude;
+mod reader;
 mod setting;
 fn main() {
     tauri::Builder::default()
