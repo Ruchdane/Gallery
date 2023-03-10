@@ -1,3 +1,6 @@
+// Because i've not yet started implementing
+#![allow(unused_variables)]
+#![allow(dead_code)]
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"

@@ -3,6 +3,9 @@ pub enum Error {
     #[error("Io error")]
     Io(#[from] std::io::Error),
 
+    #[error("Folder error")]
+    FolderError(#[from] crate::folder::FolderError),
+
     #[error("Unknown error")]
     Other(String),
 }

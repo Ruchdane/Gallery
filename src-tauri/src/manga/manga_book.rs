@@ -1,7 +1,6 @@
-use crate::prelude::*;
 use crate::{
-    folder::{Folder, FolderBuilder},
-    reader::{ArticleComponentFactory, Book, Chapter, URI},
+    folder::{Folder, FolderBuilder, Result as FolderResult},
+    reader::{ArticleComponentFactory, Book, Chapter, Uri},
 };
 
 use super::MangaFactory;
@@ -17,16 +16,15 @@ impl MangaBook {
 
 impl Book for MangaBook {
     fn get_chapter(&self, factory: &dyn ArticleComponentFactory) -> Vec<Box<dyn Chapter>> {
-        // TODO: Implement the method for getting chapters from the folder
-        unimplemented!()
+        todo!()
     }
 }
 pub struct MangaBookFolderBuilder<'a> {
     factory: &'a MangaFactory,
     name: Option<String>,
-    path: Option<URI>,
+    path: Option<Uri>,
     size: Option<u32>,
-    cover: Option<URI>,
+    cover: Option<Uri>,
 }
 
 impl<'a> MangaBookFolderBuilder<'a> {
@@ -42,31 +40,27 @@ impl<'a> MangaBookFolderBuilder<'a> {
 }
 
 impl<'a> FolderBuilder for MangaBookFolderBuilder<'a> {
-    fn build_name(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder size
-        self
+    fn build_name(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
-    fn build_path(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder size
-        self
+    fn build_path(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
-    fn build_size(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder size
-        self
+    fn build_size(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
-    fn build_cover(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder cover
-        self
+    fn build_cover(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
     fn is_ready(&self) -> bool {
         self.name.is_some() && self.path.is_some() && self.size.is_some() && self.cover.is_some()
     }
 
-    fn build(&self) -> Result<Folder> {
+    fn build(&self) -> FolderResult<Folder> {
         Ok(Folder::new(
             self.name.clone().unwrap(),
             self.path.clone().unwrap(),

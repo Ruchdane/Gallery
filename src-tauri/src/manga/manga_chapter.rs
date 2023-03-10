@@ -1,7 +1,6 @@
-use crate::prelude::*;
 use crate::{
-    folder::{Folder, FolderBuilder},
-    reader::{ArticleComponentFactory, Chapter, Page, URI},
+    folder::{Folder, FolderBuilder, Result as FolderResult},
+    reader::{ArticleComponentFactory, Chapter, Page, Uri},
 };
 
 use super::MangaFactory;
@@ -26,9 +25,9 @@ impl Chapter for MangaChapter {
 pub struct MangaChapterFolderBuilder<'a> {
     factory: &'a MangaFactory,
     name: Option<String>,
-    path: Option<URI>,
+    path: Option<Uri>,
     size: Option<u32>,
-    cover: Option<URI>,
+    cover: Option<Uri>,
 }
 
 impl<'a> MangaChapterFolderBuilder<'a> {
@@ -44,31 +43,27 @@ impl<'a> MangaChapterFolderBuilder<'a> {
 }
 
 impl<'a> FolderBuilder for MangaChapterFolderBuilder<'a> {
-    fn build_name(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder size
-        self
+    fn build_name(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
-    fn build_path(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder size
-        self
+    fn build_path(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
-    fn build_size(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder size
-        self
+    fn build_size(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
-    fn build_cover(&mut self, uri: &URI) -> &mut Self {
-        // TODO: Implement the method for getting folder cover
-        self
+    fn build_cover(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
+        todo!()
     }
 
     fn is_ready(&self) -> bool {
         self.name.is_some() && self.path.is_some() && self.size.is_some() && self.cover.is_some()
     }
 
-    fn build(&self) -> Result<Folder> {
+    fn build(&self) -> FolderResult<Folder> {
         Ok(Folder::new(
             self.name.clone().unwrap(),
             self.path.clone().unwrap(),
