@@ -1,6 +1,7 @@
 use crate::{
     folder::{Folder, FolderBuilder, Result as FolderResult},
-    reader::{ArticleComponentFactory, Chapter, Page, Uri},
+    reader::{ArticleComponentFactory, Chapter, Page},
+    uri::Uri,
 };
 
 use super::MangaFactory;

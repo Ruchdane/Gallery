@@ -20,6 +20,7 @@ mod manga;
 mod prelude;
 mod reader;
 mod setting;
+mod uri;
 fn main() {
     tauri::Builder::default()
         .setup(|app| {

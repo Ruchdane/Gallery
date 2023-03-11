@@ -1,6 +1,7 @@
 use crate::folder::FolderDirector;
 use crate::prelude::*;
-use crate::reader::{ArticleComponentFactory, Book, Chapter, Page, Uri};
+use crate::reader::{ArticleComponentFactory, Book, Chapter, Page};
+use crate::uri::Uri;
 use std::path::PathBuf;
 
 mod manga_book;
@@ -18,7 +19,7 @@ pub struct MangaFactory {}
 impl ArticleComponentFactory for MangaFactory {
     fn create_book(&self, uri: &Uri) -> Result<Box<dyn Book>> {
         let folder_builder = MangaBookFolderBuilder::new(self);
-        let folder_director = FolderDirector::new(folder_builder);
+        let mut folder_director = FolderDirector::new(folder_builder);
         let folder = folder_director.construct(uri)?;
 
         Ok(Box::new(MangaBook::new(folder)))
@@ -26,7 +27,7 @@ impl ArticleComponentFactory for MangaFactory {
 
     fn create_chapter(&self, uri: &Uri) -> Result<Box<dyn Chapter>> {
         let folder_builder = MangaChapterFolderBuilder::new(self);
-        let folder_director = FolderDirector::new(folder_builder);
+        let mut folder_director = FolderDirector::new(folder_builder);
         let folder = folder_director.construct(uri)?;
 
         Ok(Box::new(MangaChapter::new(folder)))
@@ -34,7 +35,6 @@ impl ArticleComponentFactory for MangaFactory {
 
     fn create_page(&self, uri: &Uri) -> Result<Page> {
         // TODO Check if it's an image
-        let path = uri.to_path_buf();
-        Ok(Page::Manga(path))
+        todo!()
     }
 }

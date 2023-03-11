@@ -64,7 +64,7 @@ impl FolderBuilder for MockBuilder {
 #[test]
 fn test_folder_director_constructs_folder_using_builder() {
     let builder = MockBuilder::default();
-    let direcor = FolderDirector::new(builder);
+    let mut direcor = FolderDirector::new(builder);
     let uri = Uri::Local(PathBuf::new());
     let result = direcor.construct(&uri);
     assert!(result.is_ok())
@@ -128,7 +128,7 @@ fn test_folder_director_construct_fails_when_building_name_fails() {
         size: false,
         cover: false,
     };
-    let director = FolderDirector::new(builder);
+    let mut director = FolderDirector::new(builder);
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
@@ -143,7 +143,7 @@ fn test_folder_director_construct_fails_when_building_path_fails() {
         size: false,
         cover: false,
     };
-    let director = FolderDirector::new(builder);
+    let mut director = FolderDirector::new(builder);
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
@@ -158,7 +158,7 @@ fn test_folder_director_construct_fails_when_building_size_fails() {
         size: true,
         cover: false,
     };
-    let director = FolderDirector::new(builder);
+    let mut director = FolderDirector::new(builder);
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
@@ -173,7 +173,7 @@ fn test_folder_director_construct_fails_when_building_cover_fails() {
         size: false,
         cover: true,
     };
-    let director = FolderDirector::new(builder);
+    let mut director = FolderDirector::new(builder);
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());

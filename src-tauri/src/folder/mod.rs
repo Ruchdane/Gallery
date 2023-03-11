@@ -1,8 +1,9 @@
 mod error;
 mod test;
 
-use crate::reader::Uri;
 pub use error::FolderError;
+
+use crate::uri::Uri;
 pub type Result<T> = std::result::Result<T, FolderError>;
 #[derive(Debug)]
 pub struct Folder {
@@ -35,11 +36,16 @@ pub trait FolderBuilder {
 pub struct FolderDirector<T: FolderBuilder>(T);
 
 impl<T: FolderBuilder> FolderDirector<T> {
-    pub fn construct(&self, uri: &Uri) -> Result<Folder> {
-        todo!()
+    pub fn construct(&mut self, uri: &Uri) -> Result<Folder> {
+        self.0
+            .build_name(uri)?
+            .build_path(uri)?
+            .build_size(uri)?
+            .build_cover(uri)?
+            .build()
     }
 
     pub(crate) fn new(folder_builder: T) -> Self {
-        todo!()
+        Self(folder_builder)
     }
 }
