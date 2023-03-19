@@ -179,3 +179,100 @@ fn test_folder_director_construct_fails_when_building_cover_fails() {
     assert!(result.is_err());
     assert!(result.unwrap_err().is_cover_building());
 }
+
+#[macro_export]
+macro_rules! test_folder_builder {
+    ($prefix:ident, $info: expr) => {
+        mod $prefix {
+            use super::*;
+
+            #[test]
+            fn test_is_ready_when_name_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_path(&uri).unwrap();
+                builder.build_size(&uri).unwrap();
+                builder.build_cover(&uri).unwrap();
+                assert_eq!(builder.is_ready(), false);
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "name is incomplete"
+                );
+            }
+
+            #[test]
+            fn test_is_ready_when_path_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_name(&uri).unwrap();
+                builder.build_size(&uri).unwrap();
+                builder.build_cover(&uri).unwrap();
+                assert_eq!(builder.is_ready(), false);
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "path is incomplete"
+                );
+            }
+
+            #[test]
+            fn test_is_ready_when_size_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_name(&uri).unwrap();
+                builder.build_path(&uri).unwrap();
+                builder.build_cover(&uri).unwrap();
+                assert_eq!(builder.is_ready(), false);
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "size is incomplete"
+                );
+            }
+
+            #[test]
+            fn test_is_ready_when_cover_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_name(&uri).unwrap();
+                builder.build_path(&uri).unwrap();
+                builder.build_size(&uri).unwrap();
+                assert_eq!(builder.is_ready(), false);
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "cover is incomplete"
+                );
+            }
+
+            #[test]
+            fn test_build_when_name_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_path(&uri).unwrap();
+                builder.build_size(&uri).unwrap();
+                builder.build_cover(&uri).unwrap();
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "name is incomplete"
+                );
+            }
+
+            #[test]
+            fn test_build_when_path_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_name(&uri).unwrap();
+                builder.build_size(&uri).unwrap();
+                builder.build_cover(&uri).unwrap();
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "path is incomplete"
+                );
+            }
+
+            #[test]
+            fn test_build_when_size_not_called() {
+                let (mut builder, uri) = $info;
+                builder.build_name(&uri).unwrap();
+                builder.build_path(&uri).unwrap();
+                builder.build_cover(&uri).unwrap();
+                assert_eq!(
+                    builder.build().unwrap_err().to_string(),
+                    "size is incomplete"
+                );
+            }
+        }
+    };
+}

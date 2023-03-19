@@ -1,6 +1,4 @@
 mod error;
-mod test;
-
 pub use error::FolderError;
 
 use crate::uri::Uri;
@@ -49,3 +47,6 @@ impl<T: FolderBuilder> FolderDirector<T> {
         Self(folder_builder)
     }
 }
+
+#[cfg(test)]
+pub(crate) mod test;
