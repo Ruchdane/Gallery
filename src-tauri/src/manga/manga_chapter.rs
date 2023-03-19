@@ -23,16 +23,16 @@ impl Chapter for MangaChapter {
     }
 }
 
-pub struct MangaChapterFolderBuilder<'a> {
-    factory: &'a MangaFactory,
+pub struct MangaChapterFolderBuilder {
+    factory: Box<dyn ArticleComponentFactory>,
     name: Option<String>,
     path: Option<Uri>,
     size: Option<u32>,
     cover: Option<Uri>,
 }
 
-impl<'a> MangaChapterFolderBuilder<'a> {
-    pub fn new(factory: &'a MangaFactory) -> Self {
+impl MangaChapterFolderBuilder {
+    pub fn new(factory: Box<dyn ArticleComponentFactory>) -> Self {
         Self {
             factory,
             name: None,
@@ -43,7 +43,7 @@ impl<'a> MangaChapterFolderBuilder<'a> {
     }
 }
 
-impl<'a> FolderBuilder for MangaChapterFolderBuilder<'a> {
+impl FolderBuilder for MangaChapterFolderBuilder {
     fn build_name(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
         todo!()
     }
@@ -61,15 +61,37 @@ impl<'a> FolderBuilder for MangaChapterFolderBuilder<'a> {
     }
 
     fn is_ready(&self) -> bool {
-        self.name.is_some() && self.path.is_some() && self.size.is_some() && self.cover.is_some()
+        unimplemented!()
     }
 
     fn build(&self) -> FolderResult<Folder> {
-        Ok(Folder::new(
-            self.name.clone().unwrap(),
-            self.path.clone().unwrap(),
-            self.size.unwrap(),
-            self.cover.clone().unwrap(),
-        ))
+        unimplemented!()
     }
+}
+
+#[cfg(test)]
+mod test {
+
+    use std::fs::File;
+
+    use crate::{reader::test::FakeFactory, test_folder_builder};
+    use tempdir::TempDir;
+
+    use super::*;
+
+    fn setup_manga_book() -> (MangaChapterFolderBuilder, Uri, TempDir) {
+        let temp_dir = TempDir::new("Manga").unwrap();
+        let uri = temp_dir.path();
+        for i in 1..10 {
+            let file = uri.clone();
+            File::create(file.join(format!("{0}", i))).unwrap();
+        }
+        (
+            MangaChapterFolderBuilder::new(Box::new(FakeFactory)),
+            Uri::Local(uri.into()),
+            temp_dir,
+        )
+    }
+
+    test_folder_builder!(test_manga_book_folder_builder, { setup_manga_book() });
 }
