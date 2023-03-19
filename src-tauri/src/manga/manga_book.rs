@@ -20,16 +20,16 @@ impl Book for MangaBook {
         todo!()
     }
 }
-pub struct MangaBookFolderBuilder<'a> {
-    factory: &'a MangaFactory,
+pub struct MangaBookFolderBuilder {
+    factory: Box<dyn ArticleComponentFactory>,
     name: Option<String>,
     path: Option<Uri>,
     size: Option<u32>,
     cover: Option<Uri>,
 }
 
-impl<'a> MangaBookFolderBuilder<'a> {
-    pub fn new(factory: &'a MangaFactory) -> Self {
+impl MangaBookFolderBuilder {
+    pub fn new(factory: Box<dyn ArticleComponentFactory>) -> Self {
         Self {
             factory,
             name: None,
@@ -40,7 +40,7 @@ impl<'a> MangaBookFolderBuilder<'a> {
     }
 }
 
-impl<'a> FolderBuilder for MangaBookFolderBuilder<'a> {
+impl FolderBuilder for MangaBookFolderBuilder {
     fn build_name(&mut self, uri: &Uri) -> FolderResult<&mut Self> {
         todo!()
     }
@@ -58,15 +58,41 @@ impl<'a> FolderBuilder for MangaBookFolderBuilder<'a> {
     }
 
     fn is_ready(&self) -> bool {
-        self.name.is_some() && self.path.is_some() && self.size.is_some() && self.cover.is_some()
+        todo!()
     }
 
     fn build(&self) -> FolderResult<Folder> {
-        Ok(Folder::new(
-            self.name.clone().unwrap(),
-            self.path.clone().unwrap(),
-            self.size.unwrap(),
-            self.cover.clone().unwrap(),
-        ))
+        todo!()
     }
+}
+
+#[cfg(test)]
+mod test {
+
+    use std::fs::{create_dir, File};
+
+    use crate::{reader::test::FakeFactory, test_folder_builder};
+    use tempdir::TempDir;
+
+    use super::*;
+
+    fn setup_manga_book() -> (MangaBookFolderBuilder, Uri, TempDir) {
+        let temp_dir = TempDir::new("Manga").unwrap();
+        let uri = temp_dir.path();
+        for i in 1..10 {
+            let dir = uri.clone();
+            create_dir(dir.join(format!("{0}", i))).unwrap();
+            for i in 1..10 {
+                let file = dir.clone();
+                File::create(file.join(format!("{0}", i))).unwrap();
+            }
+        }
+        (
+            MangaBookFolderBuilder::new(Box::new(FakeFactory)),
+            Uri::Local(uri.into()),
+            temp_dir,
+        )
+    }
+
+    test_folder_builder!(test_manga_chapter_folder_builder, { setup_manga_book() });
 }

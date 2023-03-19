@@ -188,7 +188,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_is_ready_when_name_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_path(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
@@ -201,7 +201,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_is_ready_when_path_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
@@ -214,7 +214,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_is_ready_when_size_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_path(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
@@ -227,7 +227,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_is_ready_when_cover_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_path(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
@@ -240,7 +240,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_build_when_name_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_path(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
@@ -252,7 +252,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_build_when_path_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
@@ -264,7 +264,7 @@ macro_rules! test_folder_builder {
 
             #[test]
             fn test_build_when_size_not_called() {
-                let (mut builder, uri) = $info;
+                let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_path(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
