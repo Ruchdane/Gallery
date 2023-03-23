@@ -11,6 +11,14 @@ pub struct Folder {
     cover: Uri,
 }
 
+#[derive(Debug, PartialEq)]
+pub enum FolderBuildStep {
+    Name,
+    Path,
+    Size,
+    Cover,
+}
+
 impl Folder {
     pub fn new(name: String, path: Uri, size: u32, cover: Uri) -> Self {
         Self {

@@ -56,8 +56,8 @@ impl FolderBuilder for MockBuilder {
     fn build(&self) -> Result<Folder> {
         if self.is_ready() {
             return Ok(folder_default());
-        }
-        Err(FolderError::IncompleteBuilding)
+        };
+        panic!("Folder Director try builded while builder not ready")
     }
 }
 
@@ -78,12 +78,28 @@ struct FaultyBuilder {
     cover: bool,
 }
 
+// assert that the build failed at this step
+pub fn assert_incomplete_building_at(step: FolderBuildStep, error: &FolderError) {
+    match error {
+        FolderError::IncompleteBuilding(s, _) if *s == step => {}
+        _ => panic!(
+            "Expected IncompleteBuilding error at step {:?}, got {:?}",
+            step, error
+        ),
+    }
+}
+
+//  create an error at
+fn incomplet_building_at(step: FolderBuildStep) -> FolderError {
+    FolderError::IncompleteBuilding(step, "".to_string())
+}
+
 impl FolderBuilder for FaultyBuilder {
     fn build_name(&mut self, uri: &Uri) -> Result<&mut Self> {
         if !self.name {
             Ok(self)
         } else {
-            Err(FolderError::NameBuilding("foo".to_string()))
+            Err(incomplet_building_at(FolderBuildStep::Name))
         }
     }
 
@@ -91,7 +107,7 @@ impl FolderBuilder for FaultyBuilder {
         if !self.path {
             Ok(self)
         } else {
-            Err(FolderError::PathBuilding("foo".to_string()))
+            Err(incomplet_building_at(FolderBuildStep::Path))
         }
     }
 
@@ -99,7 +115,7 @@ impl FolderBuilder for FaultyBuilder {
         if !self.size {
             Ok(self)
         } else {
-            Err(FolderError::SizeBuilding("foo".to_string()))
+            Err(incomplet_building_at(FolderBuildStep::Size))
         }
     }
 
@@ -107,7 +123,7 @@ impl FolderBuilder for FaultyBuilder {
         if !self.cover {
             Ok(self)
         } else {
-            Err(FolderError::CoverBuilding("foo".to_string()))
+            Err(incomplet_building_at(FolderBuildStep::Cover))
         }
     }
 
@@ -132,7 +148,10 @@ fn test_folder_director_construct_fails_when_building_name_fails() {
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
-    assert!(result.unwrap_err().is_name_building());
+    match result.unwrap_err() {
+        FolderError::IncompleteBuilding(step, _) => assert_eq!(step, FolderBuildStep::Name),
+        _ => panic!("Expected Incomplete Building error"),
+    }
 }
 
 #[test]
@@ -147,7 +166,7 @@ fn test_folder_director_construct_fails_when_building_path_fails() {
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
-    assert!(result.unwrap_err().is_path_building());
+    assert_incomplete_building_at(FolderBuildStep::Path, &result.err().unwrap())
 }
 
 #[test]
@@ -162,7 +181,7 @@ fn test_folder_director_construct_fails_when_building_size_fails() {
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
-    assert!(result.unwrap_err().is_size_building());
+    assert_incomplete_building_at(FolderBuildStep::Path, &result.err().unwrap())
 }
 
 #[test]
@@ -177,7 +196,7 @@ fn test_folder_director_construct_fails_when_building_cover_fails() {
     let uri = Uri::Local(PathBuf::new());
     let result = director.construct(&uri);
     assert!(result.is_err());
-    assert!(result.unwrap_err().is_cover_building());
+    assert_incomplete_building_at(FolderBuildStep::Path, &result.err().unwrap())
 }
 
 #[macro_export]
@@ -185,93 +204,70 @@ macro_rules! test_folder_builder {
     ($prefix:ident, $info: expr) => {
         mod $prefix {
             use super::*;
+            use crate::folder::test::assert_incomplete_building_at;
+            use crate::folder::*;
 
             #[test]
-            fn test_is_ready_when_name_not_called() {
+            fn test_is_not_ready_when_name_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_path(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
                 assert_eq!(builder.is_ready(), false);
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "name is incomplete"
-                );
             }
 
             #[test]
-            fn test_is_ready_when_path_not_called() {
+            fn test_is_not_ready_when_path_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
                 assert_eq!(builder.is_ready(), false);
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "path is incomplete"
-                );
             }
 
             #[test]
-            fn test_is_ready_when_size_not_called() {
+            fn test_is_not_ready_when_size_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_path(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
                 assert_eq!(builder.is_ready(), false);
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "size is incomplete"
-                );
             }
 
             #[test]
-            fn test_is_ready_when_cover_not_called() {
+            fn test_is_not_ready_when_cover_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_path(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 assert_eq!(builder.is_ready(), false);
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "cover is incomplete"
-                );
             }
 
             #[test]
-            fn test_build_when_name_not_called() {
+            fn test_build_fail_when_name_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_path(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "name is incomplete"
-                );
+                assert_incomplete_building_at(FolderBuildStep::Name, &builder.build().unwrap_err());
             }
 
             #[test]
-            fn test_build_when_path_not_called() {
+            fn test_build_fail_when_path_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_size(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "path is incomplete"
-                );
+                assert_incomplete_building_at(FolderBuildStep::Path, &builder.build().unwrap_err());
             }
 
             #[test]
-            fn test_build_when_size_not_called() {
+            fn test_build_fail_when_size_not_called() {
                 let (mut builder, uri, temp) = $info;
                 builder.build_name(&uri).unwrap();
                 builder.build_path(&uri).unwrap();
                 builder.build_cover(&uri).unwrap();
-                assert_eq!(
-                    builder.build().unwrap_err().to_string(),
-                    "size is incomplete"
-                );
+                assert_incomplete_building_at(FolderBuildStep::Size, &builder.build().unwrap_err());
             }
         }
     };
